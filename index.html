@@ -1,1067 +1,382 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#FDFAF5">
-<title>Compra Sin Olvidos | Saykus Solutions</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bg:#FDFAF5;--ink:#1E293B;--muted:#657386;
-  --sage:#DDE9DF;--forest:#245B47;--terra:#B9654B;
-  --line:#E3E7E1;--white:#fff;--danger:#9B3D36;
-  --shadow:0 8px 28px rgba(30,41,59,.055)
-}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Arial,sans-serif;line-height:1.5}
-button,input,select,textarea{font:inherit}
-button{cursor:pointer}
-button:disabled{opacity:.45;cursor:not-allowed}
-h1,h2,h3{font-family:Sora,Arial,sans-serif;line-height:1.25}
-h1{font-size:clamp(1.65rem,5vw,2.5rem);margin:0}
-h2{font-size:1.35rem;margin:0 0 8px}
-h3{font-size:1rem;margin:0 0 8px}
-p{margin:7px 0}
-small,.muted{color:var(--muted)}
-header{border-bottom:1px solid var(--line);background:rgba(253,250,245,.96)}
-.top{max-width:860px;margin:auto;padding:18px 20px;display:flex;align-items:center;justify-content:space-between;gap:14px}
-.brand{display:flex;align-items:center;gap:11px;font-family:Sora;font-weight:700;font-size:.98rem}
-.brandmark{width:39px;height:39px;background:var(--forest);border-radius:13px;display:grid;place-items:center;color:white}
-.brandmark svg{width:23px;height:23px}
-.brand small{display:block;font-family:Inter;font-weight:500;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase}
-main{max-width:860px;margin:auto;padding:24px 20px 75px}
-nav{position:sticky;top:0;z-index:10;background:var(--bg);border-bottom:1px solid var(--line)}
-.navinner{max-width:860px;margin:auto;display:flex;gap:6px;padding:9px 15px;overflow-x:auto;scrollbar-width:thin}
-nav button{white-space:nowrap;background:transparent;border:0;border-radius:11px;padding:11px 14px;color:var(--muted);font-size:.86rem;font-weight:600}
-nav button.active{background:var(--forest);color:white}
-section.view{display:none}
-section.view.active{display:block;animation:rise .2s ease}
-@keyframes rise{from{opacity:.3;transform:translateY(5px)}to{opacity:1;transform:none}}
-.eyebrow{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--terra);font-weight:700}
-.hero{background:linear-gradient(130deg,#EAF1E9,#F9F4EB);padding:28px;border-radius:23px;margin-bottom:22px;border:1px solid #E0E8DE}
-.hero p{max-width:610px;color:#526157}
-.card{background:white;border:1px solid var(--line);border-radius:19px;padding:21px;margin-bottom:17px;box-shadow:var(--shadow)}
-.card.soft{background:#F4F7F2}
-.cardhead{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:13px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.stat{background:white;border:1px solid var(--line);border-radius:16px;padding:18px}
-.stat strong{display:block;font-family:Sora;font-size:1.8rem}
-.stat span{color:var(--muted);font-size:.8rem}
-.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}
-.btn{border:1px solid var(--line);background:white;color:var(--ink);padding:11px 15px;border-radius:12px;font-weight:700;min-height:43px}
-.btn.primary{background:var(--forest);border-color:var(--forest);color:white}
-.btn.soft{background:var(--sage);border-color:var(--sage);color:var(--forest)}
-.btn.danger{color:var(--danger)}
-.btn.tiny{padding:7px 10px;min-height:34px;font-size:.78rem}
-.btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #A6C5B2;outline-offset:2px}
-.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.field{display:flex;flex-direction:column;gap:5px;min-width:0}
-.field.wide{grid-column:1/-1}
-label{font-weight:600;font-size:.82rem}
-input,select,textarea{width:100%;border:1px solid #CBD5CF;border-radius:11px;padding:11px 12px;background:#fff;color:var(--ink);min-height:44px}
-textarea{resize:vertical;min-height:75px}
-input[type=checkbox]{width:23px;height:23px;min-height:23px;accent-color:var(--forest);flex-shrink:0}
-input[type=file]{padding:9px}
-.item{display:flex;align-items:flex-start;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
-.item:last-child{border-bottom:0}
-.itembody{flex:1;min-width:0}
-.itemtitle{font-weight:700;overflow-wrap:anywhere}
-.itemmeta{font-size:.78rem;color:var(--muted);margin-top:3px}
-.itemtools{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}
-.tag{display:inline-block;background:#EDF3ED;color:#315C46;border-radius:30px;padding:3px 9px;font-size:.72rem;font-weight:700}
-.tag.warn{background:#FFF0E9;color:#9B4E35}
-.empty{text-align:center;color:var(--muted);padding:28px 12px}
-.notice{background:#FFF6EC;border-left:4px solid var(--terra);padding:12px 15px;border-radius:8px;font-size:.85rem;margin:12px 0}
-.checkline{display:flex;align-items:center;gap:10px;padding:8px 0}
-.progress{height:9px;border-radius:20px;background:#E6ECE7;overflow:hidden;margin:12px 0}
-.progress>div{height:100%;background:var(--forest);transition:width .2s}
-.sectiontop{margin-bottom:19px}
-.sectiontop p{color:var(--muted)}
-.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.row>*{min-width:0}
-.row .grow{flex:1;min-width:170px}
-.divider{border:0;border-top:1px solid var(--line);margin:18px 0}
-details{border:1px solid var(--line);border-radius:13px;padding:14px 16px;margin:10px 0;background:white}
-summary{font-weight:700;cursor:pointer}
-details p{font-size:.87rem;color:var(--muted);margin-top:12px}
-footer{max-width:860px;margin:0 auto;padding:25px 20px 35px;border-top:1px solid var(--line);font-size:.77rem;color:var(--muted)}
-dialog{border:1px solid var(--line);border-radius:19px;padding:24px;max-width:min(95vw,560px);width:100%;box-shadow:0 20px 70px #0003;color:var(--ink)}
-dialog::backdrop{background:#14231A99}
-dialog h2{margin-bottom:10px}
-dialog .actions{justify-content:flex-end}
-#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1E293B;color:white;padding:12px 18px;border-radius:12px;z-index:99;display:none;max-width:90vw;text-align:center}
-#toast.show{display:block}
-#storageWarning{display:none}
-.printonly{display:none}
-@media(max-width:640px){
- main{padding:16px 13px 80px}
- .top{padding:13px}
- .hero{padding:21px}
- .card{padding:16px}
- .grid{grid-template-columns:repeat(2,1fr)}
- .formgrid{grid-template-columns:1fr}
- .item{flex-wrap:wrap}
- .itemtools{width:100%;justify-content:flex-start;padding-left:35px}
- .btn{font-size:.85rem}
- .navinner{padding:8px}
- nav button{padding:11px 12px}
-}
-@media(prefers-reduced-motion:reduce){
- *,*::before,*::after{animation:none!important;transition:none!important}
-}
-@page{size:letter;margin:.65in}
-@media print{
- body{background:white;color:black;font:11pt Arial}
- header,nav,main,footer,dialog,#toast{display:none!important}
- .printonly{display:block!important}
- .printonly h1{font-size:20pt;margin:0 0 5mm}
- .printonly table{width:100%;border-collapse:collapse}
- .printonly th,.printonly td{border-bottom:1px solid #aaa;text-align:left;padding:7px 4px}
- .printonly .printfoot{margin-top:12mm;font-size:9pt}
-}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#F5F7F8">
+  <meta name="description" content="Organiza las compras del hogar, controla tus básicos y guarda tu lista para la próxima vez.">
+  <title>Compra Sin Olvidos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--cream:#F5F7F8;--paper:#FFFFFF;--ink:#1E293B;--muted:#52677A;--sage:#28718B;--sage-dark:#183B56;--sage-pale:#EAF1F3;--terracotta:#D96A50;--terracotta-pale:#FCECE7;--line:#DCE5E9;--shadow:0 16px 45px rgba(24,59,86,.07);--radius:22px;--content:860px}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:135px}body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,system-ui,sans-serif;font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}button,input,select,textarea{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid rgba(40,113,139,.48);outline-offset:2px}a{color:inherit}h1,h2,h3,h4{font-family:Sora,Inter,sans-serif;letter-spacing:-.035em;line-height:1.15;margin:0}p{margin:0}.site-header{position:sticky;top:0;z-index:30;background:rgba(245,247,248,.93);backdrop-filter:blur(18px);border-bottom:1px solid rgba(220,229,233,.9)}.header-inner{max-width:1100px;margin:0 auto;padding:12px 28px 0}.topline{display:flex;align-items:center;justify-content:space-between;gap:18px;padding-bottom:10px}.brand{display:flex;align-items:center;gap:11px;min-width:0;text-decoration:none}.brand-mark{width:39px;height:39px;display:grid;place-items:center;background:var(--sage-dark);border-radius:13px;color:white;position:relative;flex:none}.brand-mark:after{content:"";position:absolute;width:8px;height:8px;border-radius:50%;background:var(--terracotta);right:-2px;top:-2px;border:2px solid var(--cream)}.brand-mark svg{width:22px;height:22px}.brand-name{display:block;font:700 14px/1.15 Sora,Inter,sans-serif;letter-spacing:-.04em}.brand-byline{display:block;font-size:10px;color:var(--muted);margin-top:3px;letter-spacing:.08em;text-transform:uppercase}.save-status{display:flex;align-items:center;gap:7px;padding:7px 11px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.65);font-size:11px;color:var(--muted);white-space:nowrap}.save-dot{width:7px;height:7px;border-radius:50%;background:#28718B}.nav-wrap{overflow:auto;scrollbar-width:none;margin:0 -4px}.nav-wrap::-webkit-scrollbar{display:none}.nav-list{display:flex;gap:5px;width:max-content;min-width:100%;padding:2px 4px 11px}.nav-link{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:999px;text-decoration:none;font-size:12px;font-weight:600;color:#52677A;white-space:nowrap;transition:background .18s,color .18s}.nav-link:hover{background:#F5F7F8;color:var(--ink)}.nav-link.active{background:var(--sage-dark);color:#fff}.nav-count{min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:rgba(255,255,255,.24);font-size:10px;display:grid;place-items:center}.shell{max-width:var(--content);margin:0 auto;padding:38px 24px 72px}.section{scroll-margin-top:140px;margin:0 0 56px}.section-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:18px}.section-heading h2{font-size:clamp(22px,4vw,29px)}.section-heading p{font-size:13px;color:var(--muted);margin-top:7px;max-width:520px}.eyebrow{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--sage-dark);display:flex;align-items:center;gap:8px;margin-bottom:10px}.eyebrow:before{content:"";width:19px;height:1px;background:var(--terracotta)}.hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(260px,.95fr);gap:23px;align-items:stretch;margin-bottom:20px}.hero-copy{padding:18px 0 12px}.hero h1{font-size:clamp(34px,6vw,54px);max-width:570px;line-height:1.05}.hero h1 em{font-style:normal;color:var(--sage-dark)}.hero-copy>p{color:var(--muted);font-size:15px;max-width:495px;margin-top:15px}.hero-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:23px}.hero-card{position:relative;overflow:hidden;border-radius:26px;background:#FFFFFF;padding:24px 24px 19px;min-height:225px;border:1px solid #DCE5E9}.hero-card:before,.hero-card:after{content:"";position:absolute;border-radius:50%;pointer-events:none}.hero-card:before{width:210px;height:210px;background:rgba(255,255,255,.35);right:-70px;top:-100px}.hero-card:after{width:115px;height:115px;background:rgba(217,106,80,.12);right:35px;bottom:-75px}.hero-card-content{position:relative;z-index:1}.hero-card-top{display:flex;align-items:center;justify-content:space-between;gap:12px}.hero-card-label{font-size:11px;color:#183B56;font-weight:700;letter-spacing:.09em;text-transform:uppercase}.hero-card-icon{width:38px;height:38px;border-radius:13px;background:rgba(255,255,255,.6);display:grid;place-items:center;color:var(--sage-dark)}.hero-card-icon svg{width:19px;height:19px}.hero-card h3{font-size:23px;margin-top:19px}.hero-card p{font-size:12px;color:#52677A;margin-top:7px;max-width:290px}.hero-progress{margin-top:17px}.progress-label{display:flex;align-items:center;justify-content:space-between;font-size:11px;color:#52677A;margin-bottom:7px}.progress-track{height:8px;background:rgba(40,113,139,.14);border-radius:99px;overflow:hidden}.progress-fill{height:100%;width:0;background:var(--sage-dark);border-radius:inherit;transition:width .3s ease}.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin:0 0 54px}.stat-card{background:var(--paper);border:1px solid var(--line);border-radius:17px;padding:15px 17px;display:flex;align-items:center;gap:12px;min-width:0}.stat-icon{width:37px;height:37px;display:grid;place-items:center;border-radius:13px;background:var(--sage-pale);color:var(--sage-dark);flex:none}.stat-card:nth-child(2) .stat-icon{background:var(--terracotta-pale);color:var(--terracotta)}.stat-icon svg{width:18px;height:18px}.stat-value{font:700 21px/1 Sora,Inter,sans-serif;letter-spacing:-.05em}.stat-label{font-size:11px;color:var(--muted);margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:0 6px 23px rgba(24,59,86,.025)}.card-lite{background:#FFFFFF}.section-tools{display:flex;gap:8px;flex-wrap:wrap}.btn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid transparent;border-radius:12px;padding:10px 14px;font-size:12px;font-weight:700;line-height:1.25;transition:transform .15s,background .18s,border-color .18s,color .18s;white-space:nowrap}.btn:hover{transform:translateY(-1px)}.btn:active{transform:translateY(0)}.btn svg{width:15px;height:15px;flex:none}.btn-primary{background:var(--sage-dark);color:#fff}.btn-primary:hover{background:#183B56}.btn-secondary{background:#fff;border-color:var(--line);color:var(--ink)}.btn-secondary:hover{border-color:#C3D2D8;background:#F5F7F8}.btn-soft{background:var(--sage-pale);color:var(--sage-dark)}.btn-soft:hover{background:#EAF1F3}.btn-warm{background:var(--terracotta-pale);color:#D96A50}.btn-quiet{background:transparent;color:var(--muted);padding:8px}.btn-quiet:hover{background:#F5F7F8;color:var(--ink)}.btn-danger{background:#fff;border-color:#F5D8D0;color:#D96A50}.btn-danger:hover{background:#FCECE7}.btn-small{padding:7px 10px;border-radius:10px;font-size:11px}.icon-btn{width:34px;height:34px;border:1px solid var(--line);background:#fff;border-radius:10px;display:grid;place-items:center;color:#52677A;transition:.15s}.icon-btn:hover{color:var(--ink);border-color:#C3D2D8;background:#F5F7F8}.icon-btn svg{width:15px;height:15px}.form-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}.field{display:flex;flex-direction:column;gap:6px;min-width:0}.field label{font-size:11px;font-weight:700;color:#1E293B}.field small,.field-hint{font-size:10px;color:var(--muted)}.field input,.field select,.field textarea,.control-input{width:100%;border:1px solid #DCE5E9;border-radius:11px;background:#fff;padding:10px 11px;color:var(--ink);font-size:12px;min-height:41px}.field textarea{resize:vertical;min-height:76px}.field input::placeholder,.field textarea::placeholder{color:#84929D}.field input:hover,.field select:hover,.field textarea:hover{border-color:#C3D2D8}.col-12{grid-column:span 12}.col-8{grid-column:span 8}.col-6{grid-column:span 6}.col-4{grid-column:span 4}.col-3{grid-column:span 3}.inline-form{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(110px,.7fr) minmax(90px,.55fr) minmax(90px,.5fr) auto;gap:9px;align-items:end}.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:16px 0}.filter-row{display:flex;gap:7px;flex-wrap:wrap;align-items:center}.filter-chip{border:1px solid var(--line);background:white;color:#52677A;border-radius:999px;padding:7px 11px;font-size:11px;font-weight:600;display:inline-flex;align-items:center;gap:6px}.filter-chip.active{background:var(--sage-dark);border-color:var(--sage-dark);color:#fff}.filter-chip .chip-count{font-size:10px;opacity:.75}.searchbox{position:relative;min-width:210px;max-width:290px;flex:1}.searchbox svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:15px;height:15px;color:#84929D;pointer-events:none}.searchbox input{padding-left:34px}.control-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.select-control{min-height:38px;padding:8px 31px 8px 11px;border:1px solid var(--line);border-radius:999px;background:white;color:#52677A;font-size:11px}.toggle-line{display:inline-flex;align-items:center;gap:7px;font-size:11px;color:#52677A;user-select:none}.toggle-line input{accent-color:var(--sage-dark);width:15px;height:15px}.items-list{display:flex;flex-direction:column;gap:9px}.item-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:13px 14px;border:1px solid #DCE5E9;background:#FFFFFF;border-radius:15px;transition:border-color .15s,background .15s}.item-row:hover{border-color:#C3D2D8;background:#fff}.item-main{display:flex;align-items:center;gap:12px;min-width:0}.item-check{appearance:none;width:23px;height:23px;border:1.5px solid #C3D2D8;background:white;border-radius:8px;display:grid;place-items:center;flex:none;cursor:pointer;transition:.15s}.item-check:checked{background:var(--sage-dark);border-color:var(--sage-dark)}.item-check:checked:after{content:"";width:6px;height:10px;border:solid white;border-width:0 2px 2px 0;transform:rotate(45deg);margin-top:-2px}.item-copy{min-width:0}.item-name{font-weight:700;font-size:13px;line-height:1.3;overflow-wrap:anywhere}.item-sub{display:flex;align-items:center;gap:7px;flex-wrap:wrap;color:var(--muted);font-size:10px;margin-top:4px}.category-pill{display:inline-flex;align-items:center;gap:5px;padding:4px 8px;background:#EAF1F3;color:#28718B;border-radius:999px;font-size:9px;font-weight:700;line-height:1.2}.category-pill:before{content:"";width:5px;height:5px;border-radius:50%;background:var(--sage)}.category-pill.warm{background:#FCECE7;color:#D96A50}.category-pill.warm:before{background:var(--terracotta)}.item-actions{display:flex;align-items:center;gap:6px}.qty-strong{font-size:11px;font-weight:700;color:#1E293B;white-space:nowrap}.stock-alert{display:inline-flex;align-items:center;gap:5px;color:#D96A50;background:var(--terracotta-pale);padding:4px 8px;border-radius:999px;font-size:9px;font-weight:700}.stock-alert svg{width:12px;height:12px}.row-complete .item-name{text-decoration:line-through;color:#84929D}.row-complete{background:#F5F7F8}.list-group-title{font:700 11px Sora,Inter,sans-serif;letter-spacing:.03em;color:#183B56;text-transform:uppercase;display:flex;align-items:center;gap:8px;margin:11px 0 8px}.list-group-title:first-child{margin-top:0}.list-group-title:after{content:"";height:1px;background:#DCE5E9;flex:1}.empty-state{border:1px dashed #C3D2D8;border-radius:17px;background:rgba(255,255,255,.52);padding:26px 20px;text-align:center}.empty-icon{width:45px;height:45px;display:grid;place-items:center;background:var(--sage-pale);border-radius:15px;color:var(--sage-dark);margin:0 auto 11px}.empty-icon svg{width:21px;height:21px}.empty-state h3{font-size:15px}.empty-state p{font-size:11px;color:var(--muted);max-width:390px;margin:7px auto 14px}.empty-state .btn{margin-top:2px}.section-note{padding:11px 13px;border-radius:12px;background:#F5F7F8;color:#52677A;font-size:11px;display:flex;gap:9px;align-items:flex-start;margin-top:13px}.section-note svg{width:15px;height:15px;flex:none;color:var(--sage-dark);margin-top:1px}.progress-card{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 16px;background:var(--sage-pale);border-radius:14px;margin-bottom:14px}.progress-card-copy{font-size:11px;color:#52677A}.progress-card-copy strong{color:var(--sage-dark)}.progress-card .progress-track{width:155px;flex:none;background:rgba(40,113,139,.14)}.purchase-summary{display:grid;grid-template-columns:1fr 1fr;gap:12px}.summary-box{border:1px solid var(--line);border-radius:15px;padding:15px;background:#FFFFFF}.summary-box h3{font-size:13px;margin-bottom:9px}.summary-box p{font-size:11px;color:var(--muted)}.summary-box.good{background:#FFFFFF;border-color:#DCE5E9}.summary-box.pending{background:#FFFFFF;border-color:#F5D8D0}.warning-box{display:flex;gap:12px;padding:15px;border:1px solid #F5D8D0;border-radius:15px;background:#FCECE7;color:#1E293B;font-size:11px}.warning-box svg{width:19px;height:19px;color:var(--terracotta);flex:none}.warning-box strong{display:block;margin-bottom:3px;color:#1E293B}.backup-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.tool-card{padding:18px;border:1px solid var(--line);border-radius:17px;background:#FFFFFF}.tool-card-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}.tool-card-icon{width:36px;height:36px;border-radius:12px;background:var(--sage-pale);color:var(--sage-dark);display:grid;place-items:center;flex:none}.tool-card-icon svg{width:17px;height:17px}.tool-card h3{font-size:14px}.tool-card p{font-size:11px;color:var(--muted);margin:0 0 14px}.tool-card .btn{width:100%}.print-actions{display:flex;gap:9px;flex-wrap:wrap}.disclaimer{border-top:1px solid var(--line);padding-top:18px;margin-top:44px;font-size:10px;color:#52677A;display:flex;gap:9px}.disclaimer svg{width:15px;height:15px;flex:none;color:var(--sage)}.footer{font-size:10px;color:#64748B;text-align:center;padding:17px 0 0}.help-list{display:flex;flex-direction:column;gap:9px}.help-item{border:1px solid var(--line);background:#FFFFFF;border-radius:15px;overflow:hidden}.help-item summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:15px;padding:15px 17px;font-weight:700;font-size:12px}.help-item summary::-webkit-details-marker{display:none}.help-item summary:after{content:"+";width:24px;height:24px;border-radius:8px;display:grid;place-items:center;background:#EAF1F3;color:var(--sage-dark);font-size:16px;font-weight:500;flex:none;transition:transform .22s}.help-item[open] summary:after{content:"−";transform:rotate(180deg)}.help-content{display:grid;grid-template-rows:0fr;transition:grid-template-rows .25s ease}.help-item[open] .help-content{grid-template-rows:1fr}.help-content-inner{overflow:hidden;padding:0 17px;color:var(--muted);font-size:11px}.help-item[open] .help-content-inner{padding-bottom:16px}.help-content-inner p+p{margin-top:8px}.help-content-inner strong{color:#1E293B}.dialog{border:0;padding:0;background:transparent;width:min(540px,calc(100vw - 28px));max-width:none;max-height:min(88vh,780px);overflow:visible}.dialog::backdrop{background:rgba(24,59,86,.38);backdrop-filter:blur(3px)}.dialog-panel{background:var(--cream);border:1px solid rgba(255,255,255,.75);border-radius:22px;padding:21px;box-shadow:0 30px 100px rgba(24,59,86,.25);max-height:88vh;overflow:auto;animation:dialogIn .2s ease}.dialog-head{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;margin-bottom:17px}.dialog-head h2{font-size:20px}.dialog-head p{font-size:11px;color:var(--muted);margin-top:6px}.dialog-close{flex:none}.dialog-footer{display:flex;justify-content:flex-end;gap:8px;margin-top:19px;flex-wrap:wrap}.dialog-body{font-size:12px;color:#52677A}.dialog-body>p{margin:0 0 14px}.category-manager{display:flex;flex-direction:column;gap:8px;margin-top:15px}.category-edit-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:7px;align-items:center;padding:8px;background:white;border:1px solid var(--line);border-radius:12px}.category-edit-row input{min-width:0;width:100%;border:1px solid transparent;background:transparent;padding:7px 8px;font-size:12px;font-weight:600}.category-edit-row input:focus{border-color:#C3D2D8;background:#F5F7F8;border-radius:8px}.category-default{font-size:9px;color:var(--muted);padding:0 5px}.toast-region{position:fixed;z-index:100;right:18px;bottom:18px;display:flex;flex-direction:column;gap:8px;pointer-events:none}.toast{pointer-events:auto;display:flex;align-items:center;gap:9px;max-width:min(390px,calc(100vw - 36px));padding:12px 14px;background:#183B56;color:white;border-radius:13px;box-shadow:0 14px 38px rgba(24,59,86,.2);font-size:11px;animation:toastIn .2s ease}.toast.error{background:#A64D3A}.toast svg{width:16px;height:16px;flex:none}.storage-footnote{font-size:10px;color:#52677A;margin-top:11px}.hidden-input{display:none!important}.muted{color:var(--muted)}.divider{height:1px;background:var(--line);margin:16px 0}.reveal{opacity:0;transform:translateY(12px);transition:opacity .46s ease,transform .46s ease}.reveal.visible{opacity:1;transform:translateY(0)}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.print-only{display:none}
+    @keyframes dialogIn{from{opacity:0;transform:translateY(6px) scale(.99)}to{opacity:1;transform:translateY(0) scale(1)}}@keyframes toastIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+    @media(max-width:720px){.header-inner{padding-left:16px;padding-right:16px}.shell{padding:27px 16px 56px}.hero{grid-template-columns:1fr}.hero-copy{padding:7px 0 0}.hero-card{min-height:190px}.hero-card h3{font-size:21px}.stat-grid{gap:8px}.stat-card{padding:12px 10px;gap:8px}.stat-icon{width:31px;height:31px;border-radius:11px}.stat-value{font-size:18px}.stat-label{font-size:9px}.section{margin-bottom:46px}.card{padding:17px}.section-heading{align-items:flex-start;flex-direction:column;gap:12px}.section-tools{width:100%}.inline-form{grid-template-columns:repeat(2,minmax(0,1fr))}.inline-form .field:first-child{grid-column:span 2}.inline-form .btn{width:100%;min-height:41px}.item-row{padding:12px}.item-actions{gap:4px}.item-sub{font-size:9px}.backup-grid{grid-template-columns:1fr}.searchbox{min-width:100%;max-width:none}.toolbar{align-items:stretch}.toolbar .control-row{width:100%}.select-control{flex:1}.progress-card{align-items:flex-start;flex-direction:column}.progress-card .progress-track{width:100%}.purchase-summary{grid-template-columns:1fr}.print-actions .btn{flex:1}.nav-link{padding:8px 11px}.hero-actions .btn{flex:1}.section-heading .section-tools{margin-top:2px}}
+    @media(max-width:430px){.brand-name{font-size:12px}.brand-byline{font-size:8px}.brand-mark{width:35px;height:35px}.save-status{font-size:9px;padding:6px 8px}.topline{gap:8px}.stat-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.stat-label{white-space:normal;line-height:1.2;min-height:22px}.item-main{gap:9px}.item-actions .btn-small{padding:7px 8px;font-size:10px}.item-actions .icon-btn{width:31px;height:31px}.category-edit-row{grid-template-columns:minmax(0,1fr) auto}.category-default{display:none}.hero h1{font-size:36px}.filter-row{gap:5px}.filter-chip{font-size:10px;padding:7px 9px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.reveal{opacity:1;transform:none}}
+    @media print{body{background:#fff!important;color:#1E293B!important;font-size:12pt}.site-header,main,.footer,.toast-region,.dialog{display:none!important}#printCurrent{display:block!important;position:static!important;width:100%;padding:0;margin:0;font-family:Arial,sans-serif;color:#1E293B}#printCurrent h1{font-size:22pt;margin-bottom:5mm}#printCurrent .print-meta{font-size:10pt;color:#52677A;border-bottom:1px solid #DCE5E9;padding-bottom:4mm;margin-bottom:5mm}#printCurrent .print-row{display:grid;grid-template-columns:8mm 1fr auto;gap:3mm;align-items:center;border-bottom:1px solid #DCE5E9;padding:3mm 0;break-inside:avoid}#printCurrent .print-box{width:5mm;height:5mm;border:1px solid #1E293B;border-radius:1mm}#printCurrent .print-category{font-size:9pt;color:#52677A}#printCurrent .print-group{font-weight:bold;margin-top:5mm;border-bottom:1px solid #52677A;padding-bottom:2mm}#printCurrent .print-complete{color:#52677A;text-decoration:line-through}@page{size:letter;margin:14mm}}
+  </style>
 </head>
 <body>
-<header>
-  <div class="top">
-    <div class="brand">
-      <span class="brandmark" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-          <rect x="4" y="3" width="16" height="18" rx="3"/>
-          <path d="M8 8l1.5 1.5L12 7M14 9h3M8 15l1.5 1.5L12 14M14 16h3"/>
-        </svg>
-      </span>
-      <span>Compra Sin Olvidos<small>Saykus Solutions</small></span>
-    </div>
-    <span class="tag" id="saveState">Guardado local</span>
-  </div>
-</header>
-
-<nav aria-label="Secciones">
-  <div class="navinner">
-    <button data-view="inicio" class="active">Inicio</button>
-    <button data-view="inventario">Inventario</button>
-    <button data-view="basicos">Mis básicos</button>
-    <button data-view="lista">Mi lista</button>
-    <button data-view="imprimir">Imprimir</button>
-    <button data-view="ayuda">Ayuda y respaldo</button>
-  </div>
-</nav>
-
-<main>
-  <div class="notice" id="storageWarning" role="alert">
-    Tu navegador no permite guardar datos localmente en este momento.
-    Exporta un respaldo antes de cerrar esta página.
-  </div>
-
-  <section id="inicio" class="view active">
-    <div class="hero">
-      <span class="eyebrow">Tu hogar, mejor organizado</span>
-      <h1>Lo que falta,<br>a la vista.</h1>
-      <p>Revisa lo que tienes, anota lo que necesitas y lleva tu próxima compra organizada. Tus básicos seguirán aquí para la siguiente vez.</p>
-      <div class="actions">
-        <button class="btn primary" data-go="lista">Abrir mi lista</button>
-        <button class="btn" data-go="inventario">Revisar inventario</button>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="topline">
+        <a class="brand" href="#inicio" aria-label="Compra Sin Olvidos, inicio">
+          <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M8 5.5h10a1.5 1.5 0 0 1 1.5 1.5v12A1.5 1.5 0 0 1 18 20.5H6A1.5 1.5 0 0 1 4.5 19V8A2.5 2.5 0 0 1 7 5.5h1Z" stroke="currentColor" stroke-width="1.7"/><path d="m7.8 11.1 1.5 1.5 2.7-3M7.8 16.4l1.5 1.5 2.7-3M14.8 11.7h2.6M14.8 17h2.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span><span class="brand-name">Compra Sin Olvidos</span><span class="brand-byline">Organizador del hogar</span></span>
+        </a>
+        <div class="save-status" id="saveStatus" aria-live="polite"><span class="save-dot"></span><span id="saveStatusText">Guardado en este navegador</span></div>
       </div>
+      <div class="nav-wrap"><nav class="nav-list" id="primaryNav" aria-label="Secciones principales">
+        <a class="nav-link active" href="#inicio" data-nav="inicio">Inicio</a>
+        <a class="nav-link" href="#inventario" data-nav="inventario">Inventario</a>
+        <a class="nav-link" href="#basicos" data-nav="basicos">Mis básicos</a>
+        <a class="nav-link" href="#lista" data-nav="lista">Lista <span class="nav-count" id="navListCount">0</span></a>
+        <a class="nav-link" href="#pendientes" data-nav="pendientes">Pendientes <span class="nav-count" id="navPendingCount">0</span></a>
+        <a class="nav-link" href="#respaldo" data-nav="respaldo">Imprimir y respaldar</a>
+        <a class="nav-link" href="#ayuda" data-nav="ayuda">Ayuda</a>
+      </nav></div>
     </div>
-
-    <div class="grid">
-      <div class="stat"><strong id="statInventory">0</strong><span>Productos en inventario</span></div>
-      <div class="stat"><strong id="statLow">0</strong><span>Por reponer</span></div>
-      <div class="stat"><strong id="statPending">0</strong><span>Por comprar</span></div>
-    </div>
-
-    <div class="card" style="margin-top:18px">
-      <h2>Tu sistema en cuatro pasos</h2>
-      <div class="item"><span class="tag">01</span><div><b>Revisa</b><p class="muted">Comprueba las existencias de tu hogar.</p></div></div>
-      <div class="item"><span class="tag">02</span><div><b>Anota</b><p class="muted">Agrega los productos que necesitas.</p></div></div>
-      <div class="item"><span class="tag">03</span><div><b>Compra</b><p class="muted">Marca cada producto mientras compras.</p></div></div>
-      <div class="item"><span class="tag">04</span><div><b>Actualiza</b><p class="muted">Confirma lo comprado y conserva los pendientes.</p></div></div>
-    </div>
-
-    <div class="card">
-      <div class="cardhead"><h2>Reposición sugerida</h2><button class="btn tiny" data-go="inventario">Ver inventario</button></div>
-      <div id="homeLow"></div>
-    </div>
-  </section>
-
-  <section id="inventario" class="view">
-    <div class="sectiontop">
-      <span class="eyebrow">01 · Revisar</span>
-      <h1>Mi inventario</h1>
-      <p>Registra lo que tienes en casa. No necesitas controlar todos los productos: empieza por los que más utilizas.</p>
-    </div>
-
-    <div class="card">
-      <h2 id="invFormTitle">Añadir producto</h2>
-      <form id="inventoryForm" class="formgrid">
-        <input type="hidden" id="invId">
-        <div class="field wide"><label for="invName">Producto *</label><input id="invName" maxlength="90" required placeholder="Ej. Detergente"></div>
-        <div class="field"><label for="invCategory">Categoría</label><select id="invCategory"></select></div>
-        <div class="field"><label for="invUnit">Unidad</label><input id="invUnit" maxlength="30" placeholder="Ej. paquetes, litros"></div>
-        <div class="field"><label for="invQty">Cantidad disponible *</label><input id="invQty" type="number" min="0" step="any" required value="0"></div>
-        <div class="field"><label for="invMin">Mínimo deseado</label><input id="invMin" type="number" min="0" step="any" placeholder="Opcional"></div>
-        <div class="field"><label for="invTarget">Cantidad objetivo</label><input id="invTarget" type="number" min="0" step="any" placeholder="Opcional"></div>
-        <div class="field wide"><label for="invNotes">Notas</label><textarea id="invNotes" maxlength="300" placeholder="Ej. Guardado en la lavandería"></textarea></div>
-        <div class="field wide">
-          <div class="actions">
-            <button class="btn primary" type="submit">Guardar producto</button>
-            <button class="btn" type="button" id="cancelInv">Cancelar edición</button>
-          </div>
+  </header>
+  <main class="shell">
+    <section class="section" id="inicio">
+      <div class="hero">
+        <div class="hero-copy reveal">
+          <div class="eyebrow">Tu hogar, más organizado</div>
+          <h1>Lo que falta,<br><em>a la vista.</em></h1>
+          <p>Revisa lo que tienes, identifica lo que necesitas y prepara tu próxima compra sin depender solo de la memoria.</p>
+          <div class="hero-actions"><a class="btn btn-primary" href="#lista"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4.8h12A1.8 1.8 0 0 1 19.8 6.6v13.1H4.2V6.6A1.8 1.8 0 0 1 6 4.8Z" stroke="currentColor" stroke-width="1.7"/><path d="M8 9h8M8 12.5h8M8 16h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>Ver mi lista</a><button class="btn btn-secondary" type="button" data-action="add-inventory"><svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Añadir producto</button></div>
         </div>
-      </form>
-      <p><small>La reposición se sugiere cuando la cantidad disponible es inferior al mínimo. La cantidad objetivo permite indicar cuánto deseas tener.</small></p>
-    </div>
-
-    <div class="card">
-      <div class="cardhead"><h2>Productos registrados</h2><span class="tag" id="invCount">0 productos</span></div>
-      <div class="row">
-        <input class="grow" id="inventorySearch" placeholder="Buscar producto...">
-        <select id="inventoryFilter" style="max-width:190px"></select>
+        <div class="hero-card reveal" aria-live="polite"><div class="hero-card-content">
+          <div class="hero-card-top"><span class="hero-card-label">Tu próxima compra</span><span class="hero-card-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M3 4h2l2.1 10.1a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 1.9-1.4L21 8H7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="19" r="1.4" fill="currentColor"/><circle cx="18" cy="19" r="1.4" fill="currentColor"/></svg></span></div>
+          <h3 id="heroListHeading">Tu lista empieza aquí</h3><p id="heroListCopy">Añade lo que necesitas para llevar una compra clara y organizada.</p>
+          <div class="hero-progress"><div class="progress-label"><span id="heroProgressText">0 productos en tu lista</span><span id="heroProgressPercent">0%</span></div><div class="progress-track"><div class="progress-fill" id="heroProgressFill"></div></div></div>
+        </div></div>
       </div>
-      <div id="inventoryItems"></div>
-    </div>
+      <div class="stat-grid" id="summaryStats" aria-live="polite"></div>
+      <div class="card card-lite reveal" id="lastPurchaseCard" hidden></div>
+    </section>
 
-    <div class="card soft">
-      <h3>Mis categorías</h3>
-      <p class="muted">Puedes agregar categorías y cambiar el nombre de las que ya tienes.</p>
-      <div class="row">
-        <input class="grow" id="newCategory" maxlength="45" placeholder="Nueva categoría">
-        <button class="btn soft" id="addCategory">Agregar</button>
+    <section class="section" id="inventario">
+      <div class="section-heading"><div><div class="eyebrow">Etapa 01 · Revisar</div><h2>Mi inventario</h2><p>Controla solo los productos que te importa tener a mano. Las cantidades se comparan con el mínimo que tú elijas.</p></div><div class="section-tools"><button class="btn btn-secondary" type="button" data-action="manage-categories"><svg viewBox="0 0 24 24" fill="none"><path d="M4.5 6.5h15M4.5 12h15M4.5 17.5h15" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="8" cy="6.5" r="2" fill="var(--cream)" stroke="currentColor" stroke-width="1.5"/><circle cx="15" cy="12" r="2" fill="var(--cream)" stroke="currentColor" stroke-width="1.5"/></svg>Categorías</button><button class="btn btn-primary" type="button" data-action="add-inventory"><svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Añadir producto</button></div></div>
+      <div class="card">
+        <div class="toolbar"><div class="searchbox"><svg viewBox="0 0 24 24" fill="none"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.7"/><path d="m16 16 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><input id="inventorySearch" class="control-input" type="search" placeholder="Buscar en el inventario" aria-label="Buscar en el inventario"></div><div class="control-row"><select id="inventoryCategoryFilter" class="select-control" aria-label="Filtrar por categoría"></select><label class="toggle-line"><input id="restockOnly" type="checkbox"><span>Solo por reponer</span></label></div></div>
+        <div id="inventoryList" class="items-list"></div>
+        <div class="section-note"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v5M12 8h.01" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><span>La reposición compara tu cantidad disponible con el mínimo configurado. La sugerencia no añade nada a la lista hasta que tú lo decidas.</span></div>
       </div>
-      <div id="categoryItems" style="margin-top:12px"></div>
-    </div>
-  </section>
+    </section>
 
-  <section id="basicos" class="view">
-    <div class="sectiontop">
-      <span class="eyebrow">02 · Anotar</span>
-      <h1>Mis básicos</h1>
-      <p>Guarda los productos que compras habitualmente. Agrégalos a tu lista con un toque.</p>
-    </div>
-    <div class="card">
-      <h2 id="basicFormTitle">Añadir básico</h2>
-      <form id="basicForm" class="formgrid">
-        <input type="hidden" id="basicId">
-        <div class="field wide"><label for="basicName">Producto *</label><input id="basicName" maxlength="90" required placeholder="Ej. Papel higiénico"></div>
-        <div class="field"><label for="basicCategory">Categoría</label><select id="basicCategory"></select></div>
-        <div class="field"><label for="basicQty">Cantidad habitual *</label><input id="basicQty" type="number" min=".001" step="any" value="1" required></div>
-        <div class="field wide"><label for="basicUnit">Unidad</label><input id="basicUnit" maxlength="30" placeholder="Ej. paquetes"></div>
-        <div class="field wide">
-          <div class="actions">
-            <button class="btn primary" type="submit">Guardar básico</button>
-            <button class="btn" type="button" id="cancelBasic">Cancelar edición</button>
-          </div>
+    <section class="section" id="basicos">
+      <div class="section-heading"><div><div class="eyebrow">Etapa 02 · Preparar</div><h2>Mis básicos</h2><p>Guarda lo que compras con frecuencia y agrégalo a la lista cuando lo necesites.</p></div><div class="section-tools"><button class="btn btn-primary" type="button" data-action="add-basic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Añadir a mis básicos</button></div></div>
+      <div class="card"><div id="basicsList" class="items-list"></div></div>
+    </section>
+
+    <section class="section" id="lista">
+      <div class="section-heading"><div><div class="eyebrow">Etapa 03 · Comprar</div><h2>Mi lista de compras</h2><p>Marca cada producto al encontrarlo. Puedes filtrar la lista o agruparla por categoría mientras recorres la tienda.</p></div></div>
+      <div class="card">
+        <form id="shoppingAddForm" class="inline-form" autocomplete="off">
+          <div class="field"><label for="shoppingName">Producto</label><input id="shoppingName" name="name" maxlength="100" placeholder="¿Qué necesitas comprar?" required></div>
+          <div class="field"><label for="shoppingCategory">Categoría</label><select id="shoppingCategory" name="category"></select></div>
+          <div class="field"><label for="shoppingQuantity">Cantidad</label><input id="shoppingQuantity" name="quantity" type="number" min="0.01" step="0.01" value="1" required></div>
+          <div class="field"><label for="shoppingUnit">Unidad</label><input id="shoppingUnit" name="unit" maxlength="24" placeholder="opcional"></div>
+          <button class="btn btn-primary" type="submit"><svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Añadir</button>
+        </form>
+        <div class="divider"></div>
+        <div class="progress-card"><div class="progress-card-copy"><strong id="shoppingProgressCount">0 de 0 comprados</strong><br><span id="shoppingProgressCopy">Tu avance aparecerá aquí.</span></div><div class="progress-track"><div class="progress-fill" id="shoppingProgressFill"></div></div></div>
+        <div class="toolbar"><div class="filter-row" id="shoppingFilters"><button class="filter-chip active" type="button" data-filter="all">Todos <span class="chip-count" id="filterAllCount">0</span></button><button class="filter-chip" type="button" data-filter="pending">Pendientes <span class="chip-count" id="filterPendingCount">0</span></button><button class="filter-chip" type="button" data-filter="done">Comprados <span class="chip-count" id="filterDoneCount">0</span></button></div><button class="btn btn-secondary btn-small" type="button" data-action="finish-purchase"><svg viewBox="0 0 24 24" fill="none"><path d="m5 12.5 4.4 4.4L19.5 6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Finalizar compra</button></div>
+        <div id="shoppingList" class="items-list"></div>
+      </div>
+    </section>
+
+    <section class="section" id="pendientes">
+      <div class="section-heading"><div><div class="eyebrow">Para la próxima</div><h2>Pendientes</h2><p>Lo que no conseguiste puede quedarse guardado aquí hasta tu siguiente compra.</p></div></div>
+      <div class="card"><div id="pendingList" class="items-list"></div></div>
+    </section>
+
+    <section class="section" id="respaldo">
+      <div class="section-heading"><div><div class="eyebrow">Imprimir y respaldar</div><h2>Tu lista, también en papel</h2><p>Imprime la compra actual o descarga las plantillas vacías. Guarda una copia de tus datos si cambias de navegador o dispositivo.</p></div></div>
+      <div class="card">
+        <div class="print-actions"><button class="btn btn-primary" type="button" data-action="print-list"><svg viewBox="0 0 24 24" fill="none"><path d="M7 8V4.5h10V8M7 17H5.2A2.2 2.2 0 0 1 3 14.8v-4.6A2.2 2.2 0 0 1 5.2 8h13.6a2.2 2.2 0 0 1 2.2 2.2v4.6a2.2 2.2 0 0 1-2.2 2.2H17" stroke="currentColor" stroke-width="1.6"/><path d="M7 14h10v6H7z" stroke="currentColor" stroke-width="1.6"/><path d="M17.2 11.5h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Imprimir mi lista actual</button><button class="btn btn-secondary" type="button" data-action="download-pdf"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3.8v11.4M7.5 10.8 12 15.3l4.5-4.5M5 19.5h14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Descargar plantillas PDF</button></div>
+        <div class="section-note"><svg viewBox="0 0 24 24" fill="none"><path d="M6 3.8h8l4.2 4.3v12.1H6z" stroke="currentColor" stroke-width="1.6"/><path d="M14 4v4.5h4M8.5 12h7M8.5 15.5h7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span>El PDF trae cinco hojas tamaño carta: inventario de alimentos, inventario del hogar, productos habituales, lista organizada y lista rápida. La lista actual se imprime por separado.</span></div>
+        <div class="divider"></div>
+        <div class="backup-grid">
+          <div class="tool-card"><div class="tool-card-head"><span class="tool-card-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 15.8V4.5M7.8 8.7 12 4.5l4.2 4.2M5 15.5v3.8h14v-3.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><h3>Exportar mis datos</h3></div><p>Descarga una copia JSON con inventario, cantidades, categorías, básicos y listas.</p><button class="btn btn-soft" type="button" data-action="export-data">Descargar respaldo</button></div>
+          <div class="tool-card"><div class="tool-card-head"><span class="tool-card-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 8.2V19.5M7.8 15.3 12 19.5l4.2-4.2M5 4.5h14v4H5z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><h3>Importar mis datos</h3></div><p>Recupera un respaldo anterior. Revisaremos el archivo y pediremos confirmación antes de reemplazar tus datos.</p><button class="btn btn-secondary" type="button" data-action="choose-import">Elegir archivo JSON</button><input id="importInput" class="hidden-input" type="file" accept="application/json,.json"></div>
         </div>
-      </form>
-    </div>
-    <div class="card">
-      <h2>Productos habituales</h2>
-      <div id="basicItems"></div>
-    </div>
-  </section>
-
-  <section id="lista" class="view">
-    <div class="sectiontop">
-      <span class="eyebrow">03 · Comprar</span>
-      <h1>Mi lista de compras</h1>
-      <p>Agrega productos, ajusta cantidades y marca lo comprado. Lo pendiente se conserva para la siguiente compra.</p>
-    </div>
-
-    <div class="card">
-      <div class="cardhead">
-        <h2>Compra actual</h2>
-        <span class="tag" id="listCounter">0 pendientes</span>
+        <p class="storage-footnote">Los datos se guardan en este navegador. No se sincronizan automáticamente entre dispositivos. Exporta un respaldo antes de borrar los datos del sitio o cambiar de equipo.</p>
+        <div class="divider"></div><button class="btn btn-quiet btn-small" type="button" data-action="clear-data">Borrar todos mis datos de este navegador</button>
       </div>
-      <div class="progress"><div id="listProgress" style="width:0"></div></div>
-      <div class="row">
-        <select id="listFilter" style="flex:1">
-          <option value="all">Todos</option>
-          <option value="pending">Pendientes</option>
-          <option value="done">Comprados</option>
-        </select>
-        <select id="listSort" style="flex:1">
-          <option value="category">Por categoría</option>
-          <option value="name">Por nombre</option>
-          <option value="added">Por orden de agregado</option>
-        </select>
+    </section>
+
+    <section class="section" id="ayuda">
+      <div class="section-heading"><div><div class="eyebrow">Ayuda concreta</div><h2>Si algo no salió como esperabas</h2><p>Respuestas para situaciones habituales mientras organizas o haces la compra.</p></div></div>
+      <div class="help-list">
+        <details class="help-item"><summary>Cambié de dispositivo y ya no veo mis productos</summary><div class="help-content"><div class="help-content-inner"><p>Los datos se guardan en el navegador de cada dispositivo, no en una cuenta. En el dispositivo anterior, exporta un respaldo JSON. Después, en el nuevo, usa «Importar mis datos» y elige ese archivo.</p><p>No hay sincronización automática entre dispositivos en esta versión.</p></div></div></details>
+        <details class="help-item"><summary>Borré los datos del sitio y desapareció mi inventario</summary><div class="help-content"><div class="help-content-inner"><p>Si guardaste un respaldo JSON, puedes recuperarlo con «Importar mis datos». Si no existe una copia exportada, la herramienta no puede restaurar datos eliminados del almacenamiento del navegador.</p><p>Exporta un respaldo con regularidad y antes de limpiar los datos del sitio.</p></div></div></details>
+        <details class="help-item"><summary>El producto ya estaba en mi lista cuando intenté añadirlo</summary><div class="help-content"><div class="help-content-inner"><p>Comparamos los nombres para detectar repeticiones. Puedes sumar la nueva cantidad a la entrada existente o mantener la cantidad actual. Así evitas llevar dos renglones del mismo producto por accidente.</p></div></div></details>
+        <details class="help-item"><summary>Marqué un producto que todavía no compré</summary><div class="help-content"><div class="help-content-inner"><p>Vuelve a pulsar su casilla para quitar la marca. Antes de finalizar, revisa la lista: la herramienta solo cuenta como comprado lo que esté marcado en ese momento.</p></div></div></details>
+        <details class="help-item"><summary>No encontré un producto y quiero recordarlo para después</summary><div class="help-content"><div class="help-content-inner"><p>Déjalo sin marcar y pulsa «Finalizar compra». Aparecerá en el resumen de pendientes y se conservará en la sección «Pendientes» para añadirlo a una compra futura.</p></div></div></details>
+        <details class="help-item"><summary>No aparece una sugerencia para reponer un producto</summary><div class="help-content"><div class="help-content-inner"><p>La sugerencia solo aparece si el producto tiene un mínimo configurado y la cantidad disponible está por debajo de ese valor. Edita el artículo para establecer el mínimo que quieres mantener en casa.</p></div></div></details>
       </div>
-      <div id="shoppingItems"></div>
-      <div class="actions">
-        <button class="btn primary" id="finishPurchase">Finalizar compra</button>
-        <button class="btn" id="undoPurchase" hidden>Deshacer última finalización</button>
-        <button class="btn" id="printCurrent">Imprimir lista</button>
-      </div>
-    </div>
+      <div class="disclaimer"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v5M12 8h.01" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><span>Compra Sin Olvidos es un organizador personal. Las cantidades sugeridas son recordatorios calculados a partir del mínimo que tú configuraste; revísalas antes de comprar. La información se conserva solo en el almacenamiento de este navegador y puede dejar de estar disponible si se borra.</span></div>
+    </section>
+    <div class="footer">Un sistema sencillo para revisar, anotar, comprar y actualizar.</div>
+  </main>
+  <section id="printCurrent" class="print-only" aria-hidden="true"></section>
+  <dialog class="dialog" id="appDialog" aria-labelledby="dialogTitle"></dialog>
+  <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
 
-    <div class="card">
-      <h2 id="shopFormTitle">Añadir a mi lista</h2>
-      <form id="shoppingForm" class="formgrid">
-        <input type="hidden" id="shopId">
-        <div class="field wide"><label for="shopName">Producto *</label><input id="shopName" maxlength="90" required placeholder="¿Qué necesitas comprar?"></div>
-        <div class="field"><label for="shopCategory">Categoría</label><select id="shopCategory"></select></div>
-        <div class="field"><label for="shopQty">Cantidad *</label><input id="shopQty" type="number" min=".001" step="any" value="1" required></div>
-        <div class="field wide"><label for="shopUnit">Unidad</label><input id="shopUnit" maxlength="30" placeholder="Ej. unidades, paquetes"></div>
-        <div class="field wide">
-          <div class="actions">
-            <button class="btn primary" type="submit">Añadir / guardar</button>
-            <button class="btn" type="button" id="cancelShop">Cancelar edición</button>
-          </div>
-        </div>
-      </form>
-    </div>
-
-    <div class="card">
-      <h2>Agregar desde mi inventario</h2>
-      <p class="muted">Los productos por debajo de su mínimo aparecen primero.</p>
-      <div id="quickInventory"></div>
-    </div>
-  </section>
-
-  <section id="imprimir" class="view">
-    <div class="sectiontop">
-      <span class="eyebrow">Herramientas para papel</span>
-      <h1>Imprimir y descargar</h1>
-      <p>Usa tus listas en el celular o llévalas en papel. Todo está preparado para hojas tamaño carta.</p>
-    </div>
-    <div class="card">
-      <h2>Plantillas imprimibles</h2>
-      <p>Descarga un PDF de cinco hojas en blanco: inventario de alimentos, inventario del hogar, mis básicos, lista organizada y lista rápida.</p>
-      <button class="btn primary" id="downloadPdf">Descargar PDF tamaño carta</button>
-    </div>
-    <div class="card">
-      <h2>Mi lista actual</h2>
-      <p>Imprime los productos que ya agregaste, con sus cantidades y casillas. No necesitas escribirlos nuevamente.</p>
-      <button class="btn soft" id="printCurrent2">Imprimir mi lista</button>
-    </div>
-  </section>
-
-  <section id="ayuda" class="view">
-    <div class="sectiontop">
-      <span class="eyebrow">Tus datos</span>
-      <h1>Ayuda y respaldo</h1>
-      <p>Tu información se guarda en este navegador. No se sincroniza automáticamente con otros dispositivos.</p>
-    </div>
-    <div class="card">
-      <h2>Protege tu información</h2>
-      <p>Descarga un respaldo de tus inventarios, básicos, categorías y lista de compras. Puedes importarlo después en este u otro dispositivo.</p>
-      <div class="actions">
-        <button class="btn primary" id="exportData">Exportar respaldo JSON</button>
-        <button class="btn" id="importTrigger">Importar respaldo</button>
-        <input type="file" id="importFile" accept=".json,application/json" hidden>
-      </div>
-      <div class="notice">Importar un respaldo reemplazará los datos actuales. La herramienta mostrará una vista previa y pedirá confirmación.</div>
-    </div>
-
-    <div class="card">
-      <h2>Preguntas frecuentes</h2>
-      <details><summary>¿Qué pasa si cambio de celular o computadora?</summary><p>Los datos no viajan automáticamente. Exporta un respaldo JSON desde el dispositivo anterior e impórtalo en el nuevo.</p></details>
-      <details><summary>¿Qué ocurre si borro los datos del navegador?</summary><p>Podrías perder lo guardado en esta herramienta. Recupera la información desde un respaldo previamente exportado.</p></details>
-      <details><summary>¿Cómo evito agregar un producto dos veces?</summary><p>La aplicación detecta productos con el mismo nombre en la lista activa. Te permite revisar el producto existente y modificar su cantidad.</p></details>
-      <details><summary>Marqué un producto por error. ¿Qué hago?</summary><p>Vuelve a tocar su casilla para dejarlo pendiente. Si ya finalizaste la compra, utiliza «Deshacer última finalización», siempre que siga disponible.</p></details>
-      <details><summary>¿Qué pasa si no encuentro un producto?</summary><p>Déjalo sin marcar. Al finalizar, permanecerá en tu lista para la siguiente compra.</p></details>
-      <details><summary>¿Cómo funcionan los mínimos?</summary><p>Son referencias que tú defines. Si tienes menos que el mínimo registrado, la herramienta sugerirá una reposición. No son cantidades obligatorias.</p></details>
-      <details><summary>¿Puedo usar la herramienta sin internet?</summary><p>Sus funciones no necesitan un servidor una vez que el archivo ha cargado. Para abrir la URL de tu sitio normalmente necesitas conexión, salvo que el navegador ya tenga disponible el contenido.</p></details>
-    </div>
-    <div class="card">
-      <h2>Empezar de nuevo</h2>
-      <p class="muted">Esta opción elimina inventarios, básicos, categorías personalizadas y listas guardadas en este navegador.</p>
-      <button class="btn danger" id="clearAll">Eliminar todos mis datos</button>
-    </div>
-  </section>
-</main>
-
-<footer>
-  <b>Compra Sin Olvidos · Saykus Solutions</b>
-  <p>Los datos se almacenan localmente en este navegador. No hay sincronización automática. El almacenamiento puede perderse al borrar datos del sitio, cambiar de navegador o utilizar navegación privada. Exporta respaldos periódicamente. Los mínimos de reposición son orientativos y los defines tú.</p>
-</footer>
-
-<div class="printonly" id="printArea"></div>
-<div id="toast" role="status" aria-live="polite"></div>
-
-<dialog id="confirmDialog">
-  <h2 id="dialogTitle">Confirmar</h2>
-  <div id="dialogBody"></div>
-  <div class="actions">
-    <button class="btn" id="dialogCancel">Cancelar</button>
-    <button class="btn primary" id="dialogAccept">Confirmar</button>
-  </div>
-</dialog>
-
-<script>
-"use strict";
-
-const KEY = "saykus_compra_sin_olvidos_v1";
-const VERSION = 1;
-const DEFAULT_CATEGORIES = [
-  "Alimentos y bebidas","Limpieza","Higiene personal",
-  "Lavandería","Mascotas","Otros"
-];
-
-const emptyState = () => ({
-  version: VERSION,
-  categories: [...DEFAULT_CATEGORIES],
-  inventory: [],
-  basics: [],
-  shopping: [],
-  lastUndo: null
-});
-
-let state = emptyState();
-let storageOK = true;
-let toastTimer;
-let dialogResolve = null;
-
-const $ = id => document.getElementById(id);
-const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({
-  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-}[c]));
-const norm = value => String(value ?? "").trim().toLocaleLowerCase("es");
-const uid = () => (
-  typeof crypto !== "undefined" && crypto.randomUUID
-    ? crypto.randomUUID()
-    : Date.now().toString(36) + Math.random().toString(36).slice(2)
-);
-const num = value => Number(value);
-const fmt = value => Number(value).toLocaleString("es", {maximumFractionDigits:3});
-const unitText = (qty,unit) => `${fmt(qty)} ${unit || ""}`.trim();
-
-function notify(message){
-  const el=$("toast");
-  el.textContent=message;
-  el.classList.add("show");
-  clearTimeout(toastTimer);
-  toastTimer=setTimeout(()=>el.classList.remove("show"),3200);
-}
-
-function save(){
-  try{
-    localStorage.setItem(KEY,JSON.stringify(state));
-    storageOK=true;
-  }catch(e){
-    storageOK=false;
-  }
-  $("storageWarning").style.display=storageOK?"none":"block";
-  $("saveState").textContent=storageOK?"Guardado local":"Sin guardado";
-}
-
-function load(){
-  try{
-    const raw=localStorage.getItem(KEY);
-    if(raw){
-      const parsed=JSON.parse(raw);
-      if(validateState(parsed)) state=parsed;
-      else notify("Los datos guardados no tienen un formato válido.");
+  <script>
+  (()=>{
+    "use strict";
+    const STORAGE_KEY="compra-sin-olvidos.v1";
+    const DEFAULT_CATEGORIES=["Alimentos","Bebidas","Higiene","Limpieza","Lavandería","Mascotas","Otros"];
+    const $=(selector,root=document)=>root.querySelector(selector);
+    const $$=(selector,root=document)=>Array.from(root.querySelectorAll(selector));
+    const esc=(value)=>String(value??"").replace(/[&<>"']/g,(char)=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[char]));
+    const normalize=(value)=>String(value??"").trim().normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLocaleLowerCase("es");
+    const id=()=>window.crypto?.randomUUID?crypto.randomUUID():`cso-${Date.now().toString(36)}-${Math.random().toString(36).slice(2,9)}`;
+    const asNumber=(value,fallback=0)=>{const n=Number(value);return Number.isFinite(n)?n:fallback};
+    const formatQty=(value)=>new Intl.NumberFormat("es",{maximumFractionDigits:2}).format(asNumber(value));
+    const dateLabel=(value)=>{try{return new Intl.DateTimeFormat("es",{dateStyle:"medium",timeStyle:"short"}).format(new Date(value))}catch{return ""}};
+    const icon=(name)=>{
+      const icons={
+        box:'<svg viewBox="0 0 24 24" fill="none"><path d="m12 3.8 8 4.1v8.2l-8 4.1-8-4.1V7.9l8-4.1Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m4.4 8.1 7.6 4 7.6-4M12 12.2v7.4M8 5.9l7.7 4" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>',
+        basket:'<svg viewBox="0 0 24 24" fill="none"><path d="M4.5 9h15l-1.3 10.2H5.8L4.5 9Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m8 9 4-5 4 5M9 12.5v3.5M12 12.5v3.5M15 12.5v3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
+        alert:'<svg viewBox="0 0 24 24" fill="none"><path d="m12 4 9 16H3l9-16Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 9v5M12 17h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+        search:'<svg viewBox="0 0 24 24" fill="none"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.7"/><path d="m16 16 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>',
+        edit:'<svg viewBox="0 0 24 24" fill="none"><path d="m14.5 5.5 4 4M4 20l4.1-.8L19 8.3a2.1 2.1 0 0 0-3-3L5.1 16.2 4 20Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>',
+        trash:'<svg viewBox="0 0 24 24" fill="none"><path d="M4.5 7h15M9 7V4.5h6V7m2.5 0-.8 13h-9.4L6.5 7M10 10.5v6M14 10.5v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+        plus:'<svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+        check:'<svg viewBox="0 0 24 24" fill="none"><path d="m5 12.5 4.4 4.4L19.5 6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+        info:'<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v5M12 8h.01" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>'
+      };return icons[name]||icons.info;
+    };
+    const newState=()=>({version:1,categories:[...DEFAULT_CATEGORIES],inventory:[],basics:[],shopping:[],pending:[],lastPurchase:null});
+    function normalizeRecord(item,type){
+      if(!item||typeof item!=="object")return null;
+      const name=String(item.name??"").trim();if(!name)return null;
+      const record={id:String(item.id||id()),name:name.slice(0,100),category:String(item.category||"Otros").slice(0,50),unit:String(item.unit||"").slice(0,24),quantity:Math.max(0,asNumber(item.quantity,type==="inventory"?0:1))};
+      if(type==="inventory"){record.minimum=item.minimum===""||item.minimum==null?null:Math.max(0,asNumber(item.minimum,0));record.notes=String(item.notes||"").slice(0,500)}
+      if(type==="shopping"){record.checked=Boolean(item.checked);record.inventoryId=item.inventoryId?String(item.inventoryId):""}
+      if(type==="pending"){record.source=String(item.source||"");record.inventoryId=item.inventoryId?String(item.inventoryId):""}
+      if(type==="basic"){record.notes=String(item.notes||"").slice(0,150)}
+      return record;
     }
-  }catch(e){
-    storageOK=false;
-  }
-  $("storageWarning").style.display=storageOK?"none":"block";
-}
-
-function commit(){
-  save();
-  render();
-}
-
-function validText(x,max=300){
-  return typeof x==="string" && x.length<=max;
-}
-function validNumber(x,nullable=false){
-  return nullable && x===null ||
-    typeof x==="number" && Number.isFinite(x) && x>=0 && x<=1000000000;
-}
-function uniqueIds(arr){
-  return new Set(arr.map(x=>x.id)).size===arr.length;
-}
-function validateState(s){
-  if(!s||typeof s!=="object"||s.version!==VERSION) return false;
-  if(!Array.isArray(s.categories)||!Array.isArray(s.inventory)||
-     !Array.isArray(s.basics)||!Array.isArray(s.shopping)) return false;
-  if(s.categories.length>200||s.inventory.length>20000||
-     s.basics.length>20000||s.shopping.length>20000) return false;
-  if(!s.categories.every(x=>validText(x,45)&&x.trim()) ||
-     new Set(s.categories.map(norm)).size!==s.categories.length) return false;
-  const categoryOK=x=>s.categories.includes(x.category);
-  const baseOK=x=>x&&typeof x==="object"&&validText(x.id,100)&&x.id.length>0&&
-    validText(x.name,90)&&x.name.trim()&&categoryOK(x)&&
-    validText(x.unit,30)&&validNumber(x.qty);
-  if(!s.inventory.every(x=>baseOK(x)&&validNumber(x.min,true)&&
-    validNumber(x.target,true)&&validText(x.notes,300))) return false;
-  if(!s.basics.every(x=>baseOK(x)&&x.qty>0)) return false;
-  if(!s.shopping.every(x=>baseOK(x)&&x.qty>0&&typeof x.done==="boolean")) return false;
-  if(!uniqueIds(s.inventory)||!uniqueIds(s.basics)||!uniqueIds(s.shopping)) return false;
-  if(s.lastUndo!==null && s.lastUndo!==undefined){
-    const u=s.lastUndo;
-    if(!u||!Array.isArray(u.inventory)||!Array.isArray(u.shopping)) return false;
-    if(u.inventory.length>20000||u.shopping.length>20000) return false;
-    if(!u.inventory.every(x=>baseOK(x)&&validNumber(x.min,true)&&
-      validNumber(x.target,true)&&validText(x.notes,300))) return false;
-    if(!u.shopping.every(x=>baseOK(x)&&x.qty>0&&typeof x.done==="boolean")) return false;
-  }
-  return true;
-}
-
-function ask(title,body,accept="Confirmar"){
-  return new Promise(resolve=>{
-    const d=$("confirmDialog");
-    $("dialogTitle").textContent=title;
-    $("dialogBody").textContent=body;
-    $("dialogAccept").textContent=accept;
-    dialogResolve=resolve;
-    d.showModal();
-  });
-}
-function closeDialog(result){
-  $("confirmDialog").close();
-  if(dialogResolve){dialogResolve(result);dialogResolve=null;}
-}
-$("dialogAccept").onclick=()=>closeDialog(true);
-$("dialogCancel").onclick=()=>closeDialog(false);
-$("confirmDialog").addEventListener("cancel",e=>{
-  e.preventDefault();
-  closeDialog(false);
-});
-
-function go(view){
-  document.querySelectorAll(".view").forEach(x=>x.classList.toggle("active",x.id===view));
-  document.querySelectorAll("[data-view]").forEach(x=>x.classList.toggle("active",x.dataset.view===view));
-  window.scrollTo({top:0,behavior:"instant"});
-}
-document.addEventListener("click",e=>{
-  const tab=e.target.closest("[data-view],[data-go]");
-  if(tab) go(tab.dataset.view||tab.dataset.go);
-});
-
-function categoryOptions(){
-  const options=state.categories.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join("");
-  for(const id of ["invCategory","basicCategory","shopCategory"]){
-    const select=$(id),old=select.value;
-    select.innerHTML=options;
-    if(state.categories.includes(old))select.value=old;
-  }
-  const filter=$("inventoryFilter"),old=filter.value;
-  filter.innerHTML=`<option value="">Todas las categorías</option>`+options;
-  if(state.categories.includes(old))filter.value=old;
-}
-
-function render(){
-  categoryOptions();
-  renderHome();
-  renderInventory();
-  renderBasics();
-  renderShopping();
-  renderCategories();
-  $("undoPurchase").hidden=!state.lastUndo;
-}
-
-function lowStock(item){
-  return item.min!==null && item.qty<item.min;
-}
-function suggestedQty(item){
-  if(!lowStock(item))return 0;
-  const goal=item.target!==null&&item.target>=item.min?item.target:item.min;
-  return Math.max(0,goal-item.qty);
-}
-function renderHome(){
-  const low=state.inventory.filter(lowStock);
-  $("statInventory").textContent=state.inventory.length;
-  $("statLow").textContent=low.length;
-  $("statPending").textContent=state.shopping.filter(x=>!x.done).length;
-  $("homeLow").innerHTML=low.length?low.slice(0,8).map(x=>`
-    <div class="item"><div class="itembody">
-      <div class="itemtitle">${esc(x.name)}</div>
-      <div class="itemmeta">Disponible: ${esc(unitText(x.qty,x.unit))} · Sugerido: ${esc(unitText(suggestedQty(x),x.unit))}</div>
-    </div><button class="btn tiny soft" data-add-inv="${esc(x.id)}">Agregar</button></div>
-  `).join(""):`<div class="empty">No hay productos por debajo de su mínimo registrado.</div>`;
-}
-
-function renderInventory(){
-  const q=norm($("inventorySearch").value),cat=$("inventoryFilter").value;
-  const list=state.inventory.filter(x=>
-    (!q||norm(x.name).includes(q)||norm(x.notes).includes(q))&&(!cat||x.category===cat)
-  ).sort((a,b)=>Number(lowStock(b))-Number(lowStock(a))||a.name.localeCompare(b.name,"es"));
-  $("invCount").textContent=`${state.inventory.length} productos`;
-  $("inventoryItems").innerHTML=list.length?list.map(x=>`
-    <div class="item">
-      <div class="itembody">
-        <div class="itemtitle">${esc(x.name)} ${lowStock(x)?'<span class="tag warn">Reponer</span>':""}</div>
-        <div class="itemmeta">${esc(x.category)} · Disponible: ${esc(unitText(x.qty,x.unit))}</div>
-        ${x.min!==null?`<div class="itemmeta">Mínimo: ${fmt(x.min)} · Sugerido: ${esc(unitText(suggestedQty(x),x.unit))}</div>`:""}
-        ${x.notes?`<div class="itemmeta">${esc(x.notes)}</div>`:""}
-      </div>
-      <div class="itemtools">
-        <button class="btn tiny soft" data-add-inv="${esc(x.id)}">A lista</button>
-        <button class="btn tiny" data-edit-inv="${esc(x.id)}">Editar</button>
-        <button class="btn tiny danger" data-del-inv="${esc(x.id)}">Eliminar</button>
-      </div>
-    </div>`).join(""):`<div class="empty">Todavía no hay productos en esta vista.</div>`;
-}
-function resetInv(){
-  $("inventoryForm").reset();
-  $("invId").value="";
-  $("invFormTitle").textContent="Añadir producto";
-}
-$("cancelInv").onclick=resetInv;
-$("inventorySearch").oninput=renderInventory;
-$("inventoryFilter").onchange=renderInventory;
-
-function readOptional(id){
-  const v=$(id).value.trim();
-  return v===""?null:Number(v);
-}
-$("inventoryForm").onsubmit=e=>{
-  e.preventDefault();
-  const id=$("invId").value;
-  const item={
-    id:id||uid(),name:$("invName").value.trim(),
-    category:$("invCategory").value,
-    qty:num($("invQty").value),
-    unit:$("invUnit").value.trim(),
-    min:readOptional("invMin"),
-    target:readOptional("invTarget"),
-    notes:$("invNotes").value.trim()
-  };
-  if(!item.name||!validNumber(item.qty)||!validNumber(item.min,true)||
-     !validNumber(item.target,true)){notify("Revisa las cantidades.");return;}
-  if(item.target!==null&&item.min!==null&&item.target<item.min){
-    notify("La cantidad objetivo no puede ser menor que el mínimo.");return;
-  }
-  const duplicate=state.inventory.find(x=>norm(x.name)===norm(item.name)&&x.id!==id);
-  if(duplicate){notify("Ese producto ya existe en tu inventario.");return;}
-  if(id)state.inventory=state.inventory.map(x=>x.id===id?item:x);
-  else state.inventory.push(item);
-  resetInv();commit();notify("Inventario actualizado.");
-};
-
-function renderCategories(){
-  $("categoryItems").innerHTML=state.categories.map(c=>`
-    <div class="item"><div class="itembody"><b>${esc(c)}</b></div>
-    <div class="itemtools">
-      <button class="btn tiny" data-rename-cat="${esc(c)}">Renombrar</button>
-      <button class="btn tiny danger" data-del-cat="${esc(c)}">Eliminar</button>
-    </div></div>`).join("");
-}
-$("addCategory").onclick=()=>{
-  const name=$("newCategory").value.trim();
-  if(!name||name.length>45){notify("Escribe una categoría válida.");return;}
-  if(state.categories.some(x=>norm(x)===norm(name))){notify("Esa categoría ya existe.");return;}
-  state.categories.push(name);
-  $("newCategory").value="";
-  commit();
-};
-
-function resetBasic(){
-  $("basicForm").reset();$("basicId").value="";
-  $("basicFormTitle").textContent="Añadir básico";
-}
-$("cancelBasic").onclick=resetBasic;
-$("basicForm").onsubmit=e=>{
-  e.preventDefault();
-  const id=$("basicId").value;
-  const item={id:id||uid(),name:$("basicName").value.trim(),
-    category:$("basicCategory").value,qty:num($("basicQty").value),
-    unit:$("basicUnit").value.trim()};
-  if(!item.name||!validNumber(item.qty)||item.qty<=0){notify("Revisa los datos.");return;}
-  if(state.basics.some(x=>norm(x.name)===norm(item.name)&&x.id!==id)){
-    notify("Ese producto ya está en tus básicos.");return;
-  }
-  if(id)state.basics=state.basics.map(x=>x.id===id?item:x);
-  else state.basics.push(item);
-  resetBasic();commit();notify("Básico guardado.");
-};
-function renderBasics(){
-  $("basicItems").innerHTML=state.basics.length?state.basics.map(x=>`
-    <div class="item">
-      <div class="itembody"><div class="itemtitle">${esc(x.name)}</div>
-      <div class="itemmeta">${esc(x.category)} · ${esc(unitText(x.qty,x.unit))}</div></div>
-      <div class="itemtools">
-        <button class="btn tiny soft" data-add-basic="${esc(x.id)}">A lista</button>
-        <button class="btn tiny" data-edit-basic="${esc(x.id)}">Editar</button>
-        <button class="btn tiny danger" data-del-basic="${esc(x.id)}">Eliminar</button>
-      </div>
-    </div>`).join(""):`<div class="empty">Guarda aquí los productos que compras con frecuencia.</div>`;
-}
-
-function addToShopping(source){
-  const existing=state.shopping.find(x=>norm(x.name)===norm(source.name));
-  if(existing){
-    notify("Ya está en tu lista. Puedes editar su cantidad.");
-    go("lista");
-    return;
-  }
-  state.shopping.push({
-    id:uid(),name:source.name,category:source.category,
-    qty:source.qty,unit:source.unit||"",done:false
-  });
-  commit();notify("Producto añadido a tu lista.");
-}
-function resetShop(){
-  $("shoppingForm").reset();$("shopId").value="";
-  $("shopFormTitle").textContent="Añadir a mi lista";
-}
-$("cancelShop").onclick=resetShop;
-$("shoppingForm").onsubmit=e=>{
-  e.preventDefault();
-  const id=$("shopId").value;
-  const item={id:id||uid(),name:$("shopName").value.trim(),
-    category:$("shopCategory").value,qty:num($("shopQty").value),
-    unit:$("shopUnit").value.trim(),done:false};
-  if(!item.name||!validNumber(item.qty)||item.qty<=0){notify("Revisa los datos.");return;}
-  const dup=state.shopping.find(x=>norm(x.name)===norm(item.name)&&x.id!==id);
-  if(dup){notify("Ya existe en la lista. Edita el producto existente.");return;}
-  if(id){
-    const previous=state.shopping.find(x=>x.id===id);
-    item.done=previous?.done||false;
-    state.shopping=state.shopping.map(x=>x.id===id?item:x);
-  }else state.shopping.push(item);
-  resetShop();commit();notify("Lista actualizada.");
-};
-$("listFilter").onchange=renderShopping;
-$("listSort").onchange=renderShopping;
-
-function renderShopping(){
-  const total=state.shopping.length;
-  const done=state.shopping.filter(x=>x.done).length;
-  $("listCounter").textContent=`${total-done} pendientes`;
-  $("listProgress").style.width=`${total?done/total*100:0}%`;
-  const filter=$("listFilter").value,sort=$("listSort").value;
-  let items=state.shopping.filter(x=>
-    filter==="all"||filter==="pending"&&!x.done||filter==="done"&&x.done
-  );
-  if(sort==="category")items.sort((a,b)=>a.category.localeCompare(b.category,"es")||a.name.localeCompare(b.name,"es"));
-  if(sort==="name")items.sort((a,b)=>a.name.localeCompare(b.name,"es"));
-  $("shoppingItems").innerHTML=items.length?items.map(x=>`
-    <div class="item">
-      <input type="checkbox" aria-label="Marcar ${esc(x.name)} como comprado" data-check="${esc(x.id)}" ${x.done?"checked":""}>
-      <div class="itembody">
-        <div class="itemtitle" style="${x.done?"text-decoration:line-through;color:#829087":""}">${esc(x.name)}</div>
-        <div class="itemmeta">${esc(unitText(x.qty,x.unit))} · ${esc(x.category)}</div>
-      </div>
-      <div class="itemtools">
-        <button class="btn tiny" data-edit-shop="${esc(x.id)}">Editar</button>
-        <button class="btn tiny danger" data-del-shop="${esc(x.id)}">Quitar</button>
-      </div>
-    </div>`).join(""):`<div class="empty">No hay productos en esta vista.</div>`;
-
-  const low=state.inventory.filter(lowStock);
-  const others=state.inventory.filter(x=>!lowStock(x));
-  const renderQuick=x=>`<div class="item">
-    <div class="itembody"><div class="itemtitle">${esc(x.name)}</div>
-    <div class="itemmeta">${esc(x.category)} · ${lowStock(x)?"Sugerido: "+esc(unitText(suggestedQty(x),x.unit)):"Disponible: "+esc(unitText(x.qty,x.unit))}</div></div>
-    <button class="btn tiny soft" data-add-inv="${esc(x.id)}">Agregar</button></div>`;
-  $("quickInventory").innerHTML=state.inventory.length?
-    [...low,...others].slice(0,20).map(renderQuick).join(""):
-    `<div class="empty">Agrega productos a tu inventario para encontrarlos aquí.</div>`;
-}
-
-document.addEventListener("change",e=>{
-  const id=e.target.dataset.check;
-  if(id){
-    const item=state.shopping.find(x=>x.id===id);
-    if(item){item.done=e.target.checked;commit();}
-  }
-});
-
-document.addEventListener("click",async e=>{
-  const b=e.target.closest("button");
-  if(!b)return;
-  const d=b.dataset;
-  if(d.addInv){
-    const x=state.inventory.find(x=>x.id===d.addInv);
-    if(x)addToShopping({...x,qty:lowStock(x)?suggestedQty(x):1});
-  }
-  if(d.addBasic){
-    const x=state.basics.find(x=>x.id===d.addBasic);
-    if(x)addToShopping(x);
-  }
-  if(d.editInv){
-    const x=state.inventory.find(x=>x.id===d.editInv);
-    if(!x)return;
-    go("inventario");
-    $("invId").value=x.id;$("invName").value=x.name;
-    $("invCategory").value=x.category;$("invQty").value=x.qty;
-    $("invUnit").value=x.unit;$("invMin").value=x.min??"";
-    $("invTarget").value=x.target??"";$("invNotes").value=x.notes;
-    $("invFormTitle").textContent="Editar producto";
-    $("inventoryForm").scrollIntoView({behavior:"smooth"});
-  }
-  if(d.editBasic){
-    const x=state.basics.find(x=>x.id===d.editBasic);
-    if(!x)return;
-    go("basicos");
-    $("basicId").value=x.id;$("basicName").value=x.name;
-    $("basicCategory").value=x.category;$("basicQty").value=x.qty;
-    $("basicUnit").value=x.unit;
-    $("basicFormTitle").textContent="Editar básico";
-    $("basicForm").scrollIntoView({behavior:"smooth"});
-  }
-  if(d.editShop){
-    const x=state.shopping.find(x=>x.id===d.editShop);
-    if(!x)return;
-    go("lista");
-    $("shopId").value=x.id;$("shopName").value=x.name;
-    $("shopCategory").value=x.category;$("shopQty").value=x.qty;
-    $("shopUnit").value=x.unit;
-    $("shopFormTitle").textContent="Editar producto de la lista";
-    $("shoppingForm").scrollIntoView({behavior:"smooth"});
-  }
-  for(const [key,collection] of [
-    ["delInv","inventory"],["delBasic","basics"],["delShop","shopping"]
-  ]){
-    if(d[key]){
-      const x=state[collection].find(v=>v.id===d[key]);
-      if(x&&await ask("Eliminar producto",`¿Eliminar "${x.name}"? Esta acción no se puede deshacer.`,"Eliminar")){
-        state[collection]=state[collection].filter(v=>v.id!==x.id);
-        commit();notify("Producto eliminado.");
+    function sanitizeState(raw){
+      const fallback=newState();if(!raw||typeof raw!=="object")return fallback;
+      const candidate=raw.data&&typeof raw.data==="object"?raw.data:raw;
+      const categories=Array.isArray(candidate.categories)?candidate.categories.map((x)=>String(x).trim()).filter(Boolean).map((x)=>x.slice(0,50)):fallback.categories;
+      if(!categories.some((x)=>normalize(x)==="otros"))categories.push("Otros");
+      const uniqueCats=[];for(const cat of categories){if(!uniqueCats.some((x)=>normalize(x)===normalize(cat)))uniqueCats.push(cat)}
+      const map=(arr,type)=>Array.isArray(arr)?arr.map((x)=>normalizeRecord(x,type)).filter(Boolean):[];
+      return {version:1,categories:uniqueCats,inventory:map(candidate.inventory,"inventory"),basics:map(candidate.basics,"basic"),shopping:map(candidate.shopping,"shopping"),pending:map(candidate.pending,"pending"),lastPurchase:candidate.lastPurchase&&typeof candidate.lastPurchase==="object"?candidate.lastPurchase:null};
+    }
+    function loadState(){try{const raw=localStorage.getItem(STORAGE_KEY);return raw?sanitizeState(JSON.parse(raw)):newState()}catch{return newState()}}
+    let state=loadState();let inventorySearch="";let inventoryCategory="all";let restockOnly=false;let shoppingFilter="all";let toastTimer=0;
+    const dialog=$("#appDialog");
+    function showToast(message,type="success"){
+      const node=document.createElement("div");node.className=`toast ${type==="error"?"error":""}`;node.innerHTML=`${icon(type==="error"?"alert":"check")}<span>${esc(message)}</span>`;$("#toastRegion").append(node);window.setTimeout(()=>node.remove(),3500)
+    }
+    function persist(){
+      try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));$("#saveStatusText").textContent=`Guardado aquí · ${new Intl.DateTimeFormat("es",{hour:"2-digit",minute:"2-digit"}).format(new Date())}`;}
+      catch{$("#saveStatusText").textContent="No se pudo guardar";showToast("No se pudo guardar en este navegador. Exporta tus datos si el problema continúa.","error")}
+    }
+    function withViewport(fn){const y=window.scrollY,active=document.activeElement,idActive=active?.id,action=active?.dataset?.action,dataId=active?.dataset?.id,start=active?.selectionStart,end=active?.selectionEnd;fn();let next=idActive?document.getElementById(idActive):null;if(!next&&action)next=$$('[data-action]').find((node)=>node.dataset.action===action&&(!dataId||node.dataset.id===dataId));if(next){next.focus({preventScroll:true});if(typeof start==="number"&&next.setSelectionRange){try{next.setSelectionRange(start,end)}catch{}}}requestAnimationFrame(()=>window.scrollTo({top:y,behavior:"instant"}))}
+    function commit(message){persist();withViewport(renderAll);if(message)showToast(message)}
+    function categoryOptions(selected="Otros",withAll=false){const options=state.categories.map((cat)=>`<option value="${esc(cat)}" ${normalize(cat)===normalize(selected)?"selected":""}>${esc(cat)}</option>`).join("");return `${withAll?'<option value="all">Todas las categorías</option>':""}${options}`}
+    function isLow(item){return item.minimum!==null&&item.minimum!==undefined&&asNumber(item.quantity)<asNumber(item.minimum)}
+    function lowAmount(item){return Math.max(0,asNumber(item.minimum)-asNumber(item.quantity))}
+    function itemQuantity(item){return `${formatQty(item.quantity)}${item.unit?` ${esc(item.unit)}`:""}`}
+    function categoryClass(category){return ["Higiene","Limpieza","Lavandería","Mascotas"].some((x)=>normalize(x)===normalize(category))?"category-pill warm":"category-pill"}
+    function renderAll(){renderStats();renderInventory();renderBasics();renderShopping();renderPending();renderLastPurchase();renderSaved();updateNavCounts();observeReveal()}
+    function renderSaved(){const status=$("#saveStatusText");if(status&&!status.textContent)status.textContent="Guardado en este navegador"}
+    function renderStats(){
+      const low=state.inventory.filter(isLow).length;const pending=state.pending.length;const todo=state.shopping.length;const done=state.shopping.filter((x)=>x.checked).length;const percent=todo?Math.round(done/todo*100):0;
+      $("#summaryStats").innerHTML=`<div class="stat-card"><span class="stat-icon">${icon("box")}</span><div><div class="stat-value">${state.inventory.length}</div><div class="stat-label">productos en inventario</div></div></div><div class="stat-card"><span class="stat-icon">${icon("alert")}</span><div><div class="stat-value">${low}</div><div class="stat-label">por reponer</div></div></div><div class="stat-card"><span class="stat-icon">${icon("basket")}</span><div><div class="stat-value">${pending}</div><div class="stat-label">pendientes para después</div></div></div>`;
+      $("#heroListHeading").textContent=todo?`${todo} ${todo===1?"producto":"productos"} en tu lista`:"Tu lista empieza aquí";
+      $("#heroListCopy").textContent=todo?`${done} ${done===1?"comprado":"comprados"}. ${todo-done} ${todo-done===1?"por encontrar":"por encontrar"}.`:(pending?`Tienes ${pending} ${pending===1?"producto pendiente":"productos pendientes"} que puedes agregar.`:"Añade lo que necesitas para llevar una compra clara y organizada.");
+      $("#heroProgressText").textContent=todo?`${done} de ${todo} comprados`:"0 productos en tu lista";$("#heroProgressPercent").textContent=`${percent}%`;$("#heroProgressFill").style.width=`${percent}%`;
+      $("#shoppingProgressCount").textContent=`${done} de ${todo} comprados`;
+      $("#shoppingProgressCopy").textContent=todo?`${todo-done} ${todo-done===1?"pendiente":"pendientes"} en esta compra.`:"Tu avance aparecerá aquí.";
+      $("#shoppingProgressFill").style.width=`${percent}%`;
+      $("#filterAllCount").textContent=todo;$("#filterPendingCount").textContent=todo-done;$("#filterDoneCount").textContent=done;
+    }
+    function renderInventory(){
+      const select=$("#inventoryCategoryFilter");const prior=inventoryCategory;select.innerHTML=categoryOptions("Otros",true);select.value=state.categories.some((x)=>normalize(x)===normalize(prior))?prior:"all";
+      const search=normalize(inventorySearch);let items=state.inventory.filter((x)=>!search||normalize(`${x.name} ${x.category} ${x.notes} ${x.unit}`).includes(search));
+      if(inventoryCategory!=="all")items=items.filter((x)=>normalize(x.category)===normalize(inventoryCategory));if(restockOnly)items=items.filter(isLow);
+      items.sort((a,b)=>a.name.localeCompare(b.name,"es"));
+      const host=$("#inventoryList");
+      if(!state.inventory.length){host.innerHTML=`<div class="empty-state"><span class="empty-icon">${icon("box")}</span><h3>Tu inventario empieza con lo importante</h3><p>Añade los productos que quieras vigilar. Puedes dejar el mínimo vacío si solo quieres anotar la cantidad que tienes.</p><button class="btn btn-primary btn-small" type="button" data-action="add-inventory">Añadir primer producto</button></div>`;return}
+      if(!items.length){host.innerHTML=`<div class="empty-state"><span class="empty-icon">${icon("search")}</span><h3>No encontramos productos con ese filtro</h3><p>Prueba otro nombre, categoría o desactiva «Solo por reponer».</p><button class="btn btn-secondary btn-small" type="button" data-action="clear-inventory-filters">Quitar filtros</button></div>`;return}
+      host.innerHTML=items.map((item)=>`<article class="item-row"><div class="item-main"><div class="item-copy"><div class="item-name">${esc(item.name)}</div><div class="item-sub"><span class="${categoryClass(item.category)}">${esc(item.category)}</span><span>${itemQuantity(item)} disponibles</span>${item.minimum!==null?`<span>Mínimo ${formatQty(item.minimum)}${item.unit?` ${esc(item.unit)}`:""}</span>`:""}${item.notes?`<span>${esc(item.notes)}</span>`:""}${isLow(item)?`<span class="stock-alert">${icon("alert")}Faltan ${formatQty(lowAmount(item))}${item.unit?` ${esc(item.unit)}`:""}</span>`:""}</div></div></div><div class="item-actions">${isLow(item)?`<button class="btn btn-soft btn-small" type="button" data-action="restock-item" data-id="${esc(item.id)}">Añadir reposición</button>`:`<button class="btn btn-secondary btn-small" type="button" data-action="add-inventory-item" data-id="${esc(item.id)}">A la lista</button>`}<button class="icon-btn" type="button" data-action="edit-inventory" data-id="${esc(item.id)}" aria-label="Editar ${esc(item.name)}">${icon("edit")}</button><button class="icon-btn" type="button" data-action="delete-inventory" data-id="${esc(item.id)}" aria-label="Eliminar ${esc(item.name)}">${icon("trash")}</button></div></article>`).join("");
+    }
+    function renderBasics(){
+      const host=$("#basicsList");if(!state.basics.length){host.innerHTML=`<div class="empty-state"><span class="empty-icon">${icon("basket")}</span><h3>Guarda aquí tus compras habituales</h3><p>Los básicos no se añaden solos. Elige los que necesitas y agrégalos a cada lista cuando corresponda.</p><button class="btn btn-primary btn-small" type="button" data-action="add-basic">Añadir primer básico</button></div>`;return}
+      const items=[...state.basics].sort((a,b)=>a.name.localeCompare(b.name,"es"));host.innerHTML=items.map((item)=>`<article class="item-row"><div class="item-main"><div class="item-copy"><div class="item-name">${esc(item.name)}</div><div class="item-sub"><span class="${categoryClass(item.category)}">${esc(item.category)}</span><span>${itemQuantity(item)} habitual</span>${item.notes?`<span>${esc(item.notes)}</span>`:""}</div></div></div><div class="item-actions"><button class="btn btn-soft btn-small" type="button" data-action="add-basic-list" data-id="${esc(item.id)}">${icon("plus")}Añadir a la lista</button><button class="icon-btn" type="button" data-action="edit-basic" data-id="${esc(item.id)}" aria-label="Editar ${esc(item.name)}">${icon("edit")}</button><button class="icon-btn" type="button" data-action="delete-basic" data-id="${esc(item.id)}" aria-label="Eliminar ${esc(item.name)}">${icon("trash")}</button></div></article>`).join("");
+    }
+    function renderShopping(){
+      const host=$("#shoppingList");const done=state.shopping.filter((x)=>x.checked).length;const filtered=state.shopping.filter((x)=>shoppingFilter==="all"||(shoppingFilter==="pending"&&!x.checked)||(shoppingFilter==="done"&&x.checked));
+      $$("#shoppingFilters .filter-chip").forEach((button)=>button.classList.toggle("active",button.dataset.filter===shoppingFilter));
+      if(!state.shopping.length){host.innerHTML=`<div class="empty-state"><span class="empty-icon">${icon("basket")}</span><h3>Aún no hay productos en esta compra</h3><p>Anota lo que falta o agrégalo desde el inventario y tus básicos.</p><button class="btn btn-secondary btn-small" type="button" data-action="add-inventory">Revisar inventario</button></div>`;return}
+      if(!filtered.length){host.innerHTML=`<div class="empty-state"><span class="empty-icon">${icon("check")}</span><h3>${shoppingFilter==="done"?"Todavía no has marcado productos":"No quedan productos pendientes"}</h3><p>${shoppingFilter==="done"?"Marca una casilla cuando encuentres un artículo.":"Todo lo de esta lista aparece como comprado."}</p></div>`;return}
+      const categories=[...new Set(filtered.map((x)=>x.category||"Otros"))].sort((a,b)=>{const ia=state.categories.findIndex((c)=>normalize(c)===normalize(a));const ib=state.categories.findIndex((c)=>normalize(c)===normalize(b));return (ia<0?99:ia)-(ib<0?99:ib)||a.localeCompare(b,"es")});
+      host.innerHTML=categories.map((category)=>`<div class="list-group-title">${esc(category)}</div>${filtered.filter((x)=>normalize(x.category||"Otros")===normalize(category)).map((item)=>`<article class="item-row ${item.checked?"row-complete":""}"><div class="item-main"><input class="item-check" type="checkbox" ${item.checked?"checked":""} data-action="toggle-shopping" data-id="${esc(item.id)}" aria-label="${item.checked?"Desmarcar":"Marcar"} ${esc(item.name)}"><div class="item-copy"><div class="item-name">${esc(item.name)}</div><div class="item-sub"><span>${formatQty(item.quantity)}${item.unit?` ${esc(item.unit)}`:""}</span>${item.inventoryId?`<span class="${categoryClass(item.category)}">${esc(item.category)}</span>`:`<span class="${categoryClass(item.category)}">${esc(item.category)}</span>`}</div></div></div><div class="item-actions"><button class="icon-btn" type="button" data-action="edit-shopping" data-id="${esc(item.id)}" aria-label="Editar ${esc(item.name)}">${icon("edit")}</button><button class="icon-btn" type="button" data-action="delete-shopping" data-id="${esc(item.id)}" aria-label="Quitar ${esc(item.name)} de la lista">${icon("trash")}</button></div></article>`).join("")}`).join("");
+    }
+    function renderPending(){
+      const host=$("#pendingList");if(!state.pending.length){host.innerHTML=`<div class="empty-state"><span class="empty-icon">${icon("check")}</span><h3>No tienes pendientes guardados</h3><p>Al finalizar una compra, los productos sin marcar se conservarán aquí para que decidas cuándo volver a incluirlos.</p></div>`;return}
+      const items=[...state.pending].sort((a,b)=>a.name.localeCompare(b.name,"es"));host.innerHTML=items.map((item)=>`<article class="item-row"><div class="item-main"><div class="item-copy"><div class="item-name">${esc(item.name)}</div><div class="item-sub"><span class="${categoryClass(item.category)}">${esc(item.category)}</span><span>${itemQuantity(item)}</span><span class="stock-alert">Quedó pendiente</span></div></div></div><div class="item-actions"><button class="btn btn-soft btn-small" type="button" data-action="add-pending" data-id="${esc(item.id)}">${icon("plus")}A la próxima lista</button><button class="icon-btn" type="button" data-action="delete-pending" data-id="${esc(item.id)}" aria-label="Eliminar pendiente ${esc(item.name)}">${icon("trash")}</button></div></article>`).join("");
+    }
+    function renderLastPurchase(){
+      const card=$("#lastPurchaseCard");const last=state.lastPurchase;if(!last){card.hidden=true;card.innerHTML="";return}card.hidden=false;card.innerHTML=`<div class="eyebrow">Última actualización</div><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap"><div><h3 style="font-size:16px">Compra finalizada</h3><p class="muted" style="font-size:11px;margin-top:5px">${esc(dateLabel(last.date)||"")}</p></div><div class="filter-row"><span class="category-pill">${asNumber(last.purchased)} comprados</span><span class="category-pill warm">${asNumber(last.pending)} pendientes</span></div></div>`;
+    }
+    function updateNavCounts(){$("#navListCount").textContent=state.shopping.length;$("#navPendingCount").textContent=state.pending.length}
+    function observeReveal(){if(!("IntersectionObserver"in window)){ $$(".reveal").forEach((el)=>el.classList.add("visible"));return}if(!window.revealObserver){window.revealObserver=new IntersectionObserver((entries,observer)=>entries.forEach((entry)=>{if(entry.isIntersecting){entry.target.classList.add("visible");observer.unobserve(entry.target)}}),{threshold:.08})}$$(".reveal:not(.visible)").forEach((el)=>window.revealObserver.observe(el))}
+    function setNavObserver(){if(!("IntersectionObserver"in window))return;const observer=new IntersectionObserver((entries)=>{entries.forEach((entry)=>{if(entry.isIntersecting){const current=entry.target.id;$$(".nav-link").forEach((link)=>link.classList.toggle("active",link.dataset.nav===current))}})},{rootMargin:"-24% 0px -66% 0px",threshold:0});$$("main section[id]").forEach((section)=>observer.observe(section))}
+    function openDialog(title,description,body,footer="",wide=false){if(dialog.open)dialog.close();dialog.classList.toggle("wide",wide);dialog.style.width=wide?"min(650px,calc(100vw - 28px))":"";dialog.innerHTML=`<div class="dialog-panel"><div class="dialog-head"><div><h2 id="dialogTitle">${esc(title)}</h2>${description?`<p>${esc(description)}</p>`:""}</div><button class="icon-btn dialog-close" type="button" data-action="close-dialog" aria-label="Cerrar">×</button></div><div class="dialog-body">${body}</div>${footer?`<div class="dialog-footer">${footer}</div>`:""}</div>`;dialog.showModal()}
+    const cancelBtn='<button class="btn btn-secondary" type="button" data-action="close-dialog">Cancelar</button>';
+    function closeDialog(){if(dialog.open)dialog.close()}
+    function openInventoryForm(item=null){
+      const current=item||{name:"",category:"Alimentos",quantity:0,unit:"",minimum:"",notes:""};const editing=Boolean(item);
+      const body=`<form id="inventoryForm"><input type="hidden" name="id" value="${esc(current.id||"")}"><div class="form-grid"><div class="field col-8"><label for="invName">Nombre del producto</label><input id="invName" name="name" maxlength="100" value="${esc(current.name)}" placeholder="Por ejemplo, arroz" required></div><div class="field col-4"><label for="invCategory">Categoría</label><select id="invCategory" name="category">${categoryOptions(current.category||"Alimentos")}</select></div><div class="field col-4"><label for="invQuantity">Cantidad disponible</label><input id="invQuantity" name="quantity" type="number" min="0" step="0.01" value="${esc(current.quantity)}" required></div><div class="field col-4"><label for="invUnit">Unidad <span class="muted">(opcional)</span></label><input id="invUnit" name="unit" maxlength="24" value="${esc(current.unit||"")}" placeholder="paquetes, litros…"></div><div class="field col-4"><label for="invMinimum">Mínimo deseado <span class="muted">(opcional)</span></label><input id="invMinimum" name="minimum" type="number" min="0" step="0.01" value="${current.minimum==null?"":esc(current.minimum)}" placeholder="Sin mínimo"></div><div class="field col-12"><label for="invNotes">Observaciones <span class="muted">(opcional)</span></label><textarea id="invNotes" name="notes" maxlength="500" placeholder="Marca, lugar donde lo guardas…">${esc(current.notes||"")}</textarea></div></div><div class="dialog-footer">${cancelBtn}<button class="btn btn-primary" type="submit">${editing?"Guardar cambios":"Añadir al inventario"}</button></div></form>`;
+      openDialog(editing?"Editar producto":"Añadir al inventario",editing?"Actualiza las cantidades o detalles del producto.":"Registra solo lo que quieres tener controlado.",body,"",true);$("#invName")?.focus();
+    }
+    function openBasicForm(item=null){const current=item||{name:"",category:"Alimentos",quantity:1,unit:"",notes:""};const editing=Boolean(item);const body=`<form id="basicForm"><input type="hidden" name="id" value="${esc(current.id||"")}"><div class="form-grid"><div class="field col-8"><label for="basicName">Nombre</label><input id="basicName" name="name" maxlength="100" value="${esc(current.name)}" placeholder="Por ejemplo, detergente" required></div><div class="field col-4"><label for="basicCategory">Categoría</label><select id="basicCategory" name="category">${categoryOptions(current.category||"Alimentos")}</select></div><div class="field col-6"><label for="basicQuantity">Cantidad habitual</label><input id="basicQuantity" name="quantity" type="number" min="0.01" step="0.01" value="${esc(current.quantity||1)}" required></div><div class="field col-6"><label for="basicUnit">Unidad <span class="muted">(opcional)</span></label><input id="basicUnit" name="unit" maxlength="24" value="${esc(current.unit||"")}" placeholder="unidades, paquetes…"></div><div class="field col-12"><label for="basicNotes">Nota <span class="muted">(opcional)</span></label><input id="basicNotes" name="notes" maxlength="150" value="${esc(current.notes||"")}" placeholder="Una referencia útil"></div></div><div class="dialog-footer">${cancelBtn}<button class="btn btn-primary" type="submit">${editing?"Guardar cambios":"Guardar básico"}</button></div></form>`;openDialog(editing?"Editar básico":"Añadir a mis básicos",editing?"Modifica este producto habitual.":"Guárdalo para agregarlo rápidamente cuando lo necesites.",body,"",true);$("#basicName")?.focus()}
+    function openShoppingEdit(item){const body=`<form id="shoppingEditForm"><input type="hidden" name="id" value="${esc(item.id)}"><div class="form-grid"><div class="field col-6"><label for="editShopName">Producto</label><input id="editShopName" name="name" maxlength="100" value="${esc(item.name)}" required></div><div class="field col-6"><label for="editShopCategory">Categoría</label><select id="editShopCategory" name="category">${categoryOptions(item.category||"Otros")}</select></div><div class="field col-6"><label for="editShopQuantity">Cantidad</label><input id="editShopQuantity" name="quantity" type="number" min="0.01" step="0.01" value="${esc(item.quantity)}" required></div><div class="field col-6"><label for="editShopUnit">Unidad <span class="muted">(opcional)</span></label><input id="editShopUnit" name="unit" maxlength="24" value="${esc(item.unit||"")}"></div></div><div class="dialog-footer">${cancelBtn}<button class="btn btn-primary" type="submit">Guardar cambios</button></div></form>`;openDialog("Editar artículo","Ajusta lo que necesitas llevar.",body,"",true)}
+    function openCategories(){
+      const rows=state.categories.map((cat)=>`<form class="category-edit-row" data-category-form="rename"><input type="hidden" name="old" value="${esc(cat)}"><input name="name" maxlength="50" value="${esc(cat)}" aria-label="Nombre de categoría ${esc(cat)}" required><span class="category-default">${normalize(cat)==="otros"?"Categoría base":""}</span><button class="icon-btn" type="submit" aria-label="Guardar categoría">${icon("check")}</button>${normalize(cat)==="otros"?"":`<button class="icon-btn" type="button" data-action="delete-category" data-category="${esc(cat)}" aria-label="Eliminar categoría ${esc(cat)}">${icon("trash")}</button>`}</form>`).join("");
+      const body=`<p>Organiza tus productos con los nombres que mejor funcionan en tu hogar. Si eliminas una categoría, los artículos asociados pasarán a «Otros» después de confirmarlo.</p><div class="category-manager">${rows}</div><div class="divider"></div><form id="categoryAddForm" class="inline-form" style="grid-template-columns:minmax(0,1fr) auto"><div class="field"><label for="newCategory">Nueva categoría</label><input id="newCategory" name="name" maxlength="50" placeholder="Nombre de la categoría" required></div><button class="btn btn-primary" type="submit">${icon("plus")}Añadir</button></form>`;
+      openDialog("Categorías","Crea, renombra o elimina categorías.",body,`<button class="btn btn-secondary" type="button" data-action="close-dialog">Listo</button>`,true)
+    }
+    function addToShopping(source,pendingId=""){
+      const incoming={id:id(),name:String(source.name||"").trim(),category:source.category||"Otros",quantity:Math.max(.01,asNumber(source.quantity,1)),unit:source.unit||"",checked:false,inventoryId:source.inventoryId||""};if(!incoming.name)return false;
+      const existing=state.shopping.find((x)=>normalize(x.name)===normalize(incoming.name));
+      if(existing){
+        const foot=pendingId?`<input type="hidden" id="duplicatePendingId" value="${esc(pendingId)}">`:"";
+        const body=`<p><strong>${esc(incoming.name)}</strong> ya está en tu lista con ${formatQty(existing.quantity)}${existing.unit?` ${esc(existing.unit)}`:""}. Agregar desde otro lugar no creará una segunda línea.</p><p>La nueva cantidad que intentas añadir es ${formatQty(incoming.quantity)}${incoming.unit?` ${esc(incoming.unit)}`:""}.</p>${foot}`;
+        openDialog("Este producto ya está en la lista","Elige cómo resolver la repetición.",body,`<button class="btn btn-secondary" type="button" data-action="dup-cancel">Cancelar</button><button class="btn btn-quiet" type="button" data-action="dup-keep" data-existing="${esc(existing.id)}" data-pending="${esc(pendingId)}">Mantener la cantidad</button><button class="btn btn-primary" type="button" data-action="dup-add" data-existing="${esc(existing.id)}" data-amount="${incoming.quantity}" data-unit="${esc(incoming.unit)}" data-pending="${esc(pendingId)}">Sumar cantidad</button>`);return false
       }
+      state.shopping.push(incoming);if(pendingId)state.pending=state.pending.filter((x)=>x.id!==pendingId);commit("Añadido a la lista de compras");return true
     }
-  }
-  if(d.renameCat){
-    const old=d.renameCat;
-    const next=prompt("Nuevo nombre de la categoría:",old);
-    if(next===null)return;
-    const name=next.trim();
-    if(!name||name.length>45||state.categories.some(x=>norm(x)===norm(name)&&x!==old)){
-      notify("El nombre está vacío, es muy largo o ya existe.");return;
+    function deleteWithConfirm(title,message,onConfirm){openDialog(title,"",`<p>${esc(message)}</p>`,`<button class="btn btn-secondary" type="button" data-action="close-dialog">Cancelar</button><button class="btn btn-danger" type="button" data-action="confirm-delete">${icon("trash")}Eliminar</button>`);dialog.dataset.onConfirm="";window.pendingConfirm=onConfirm}
+    function createPurchaseSummary(){
+      const bought=state.shopping.filter((x)=>x.checked);const notBought=state.shopping.filter((x)=>!x.checked);const names=(items)=>items.length?`<ul style="margin:8px 0 0;padding-left:18px">${items.slice(0,5).map((x)=>`<li style="margin:3px 0">${esc(x.name)} · ${formatQty(x.quantity)}${x.unit?` ${esc(x.unit)}`:""}</li>`).join("")}${items.length>5?`<li>y ${items.length-5} más</li>`:""}</ul>`:`<p>No hay productos en este grupo.</p>`;
+      const updateAvailable=bought.some((x)=>state.inventory.some((i)=>x.inventoryId===i.id||normalize(i.name)===normalize(x.name)));
+      const body=`<p>Revisa el resultado. Los productos sin marcar se guardarán en «Pendientes» para la próxima compra.</p><div class="purchase-summary"><div class="summary-box good"><h3>Comprados · ${bought.length}</h3>${names(bought)}</div><div class="summary-box pending"><h3>Pendientes · ${notBought.length}</h3>${names(notBought)}</div></div><label class="toggle-line" style="margin-top:15px;align-items:flex-start"><input id="updateStockConfirm" type="checkbox" ${updateAvailable?"":"disabled"} style="margin-top:2px"><span>Actualizar inventario sumando la cantidad comprada a los productos que ya están registrados${updateAvailable?".":". No hay productos comprados vinculados a un artículo del inventario."}</span></label><p class="field-hint" style="margin-top:9px">La actualización solo ocurre después de confirmar. No se crean artículos de inventario automáticamente.</p>`;
+      openDialog("Finalizar compra",`${bought.length} comprados · ${notBought.length} pendientes`,body,`<button class="btn btn-secondary" type="button" data-action="close-dialog">Volver a revisar</button><button class="btn btn-primary" type="button" data-action="confirm-finish">Confirmar y preparar la siguiente</button>`,true)
     }
-    state.categories=state.categories.map(x=>x===old?name:x);
-    for(const collection of ["inventory","basics","shopping"])
-      state[collection].forEach(x=>{if(x.category===old)x.category=name;});
-    if(state.lastUndo){
-      for(const collection of ["inventory","shopping"])
-        state.lastUndo[collection].forEach(x=>{if(x.category===old)x.category=name;});
+    function completePurchase(updateInventory){
+      const bought=state.shopping.filter((x)=>x.checked);const notBought=state.shopping.filter((x)=>!x.checked);
+      if(updateInventory){for(const item of bought){const inventoryItem=state.inventory.find((i)=>item.inventoryId===i.id)||state.inventory.find((i)=>normalize(i.name)===normalize(item.name));if(inventoryItem)inventoryItem.quantity=asNumber(inventoryItem.quantity)+asNumber(item.quantity)}}
+      for(const item of notBought){const existing=state.pending.find((p)=>normalize(p.name)===normalize(item.name));if(existing){existing.quantity=Math.max(existing.quantity,asNumber(item.quantity));existing.category=item.category;existing.unit=item.unit}else state.pending.push({...item,id:id(),checked:false,source:"finalized"})}
+      state.lastPurchase={date:new Date().toISOString(),purchased:bought.length,pending:notBought.length,inventoryUpdated:Boolean(updateInventory)};state.shopping=[];closeDialog();commit("Compra finalizada. Tus pendientes siguen guardados.");document.querySelector("#inicio").scrollIntoView({behavior:"smooth",block:"start"})
     }
-    commit();
-  }
-  if(d.delCat){
-    const name=d.delCat;
-    if(state.categories.length===1){notify("Debes conservar al menos una categoría.");return;}
-    const used=["inventory","basics","shopping"].some(k=>state[k].some(x=>x.category===name));
-    if(used){notify("Mueve los productos a otra categoría antes de eliminarla.");return;}
-    if(state.lastUndo&&["inventory","shopping"].some(k=>state.lastUndo[k].some(x=>x.category===name))){
-      notify("La categoría aparece en el historial para deshacer. Finaliza otra compra antes de eliminarla.");return;
+    function exportData(){const backup={app:"Compra Sin Olvidos",version:1,exportedAt:new Date().toISOString(),data:state};const blob=new Blob([JSON.stringify(backup,null,2)],{type:"application/json"});downloadBlob(blob,`compra-sin-olvidos-respaldo-${new Date().toISOString().slice(0,10)}.json`);showToast("Respaldo descargado")}
+    function downloadBlob(blob,filename){const url=URL.createObjectURL(blob);const anchor=document.createElement("a");anchor.href=url;anchor.download=filename;anchor.style.display="none";document.body.append(anchor);anchor.click();anchor.remove();setTimeout(()=>URL.revokeObjectURL(url),1500)}
+    function validateBackup(parsed){
+      if(!parsed||typeof parsed!=="object"||parsed.app!=="Compra Sin Olvidos"||Number(parsed.version)!==1||!parsed.data||typeof parsed.data!=="object")throw new Error("El archivo no tiene el formato de respaldo de Compra Sin Olvidos.");
+      const d=parsed.data;if(!Array.isArray(d.categories)||!Array.isArray(d.inventory)||!Array.isArray(d.basics)||!Array.isArray(d.shopping)||!Array.isArray(d.pending))throw new Error("Faltan listas necesarias en el archivo. No se han cambiado tus datos.");
+      for(const list of [d.inventory,d.basics,d.shopping,d.pending]){if(list.some((item)=>!item||typeof item!=="object"||typeof item.name!=="string"||!item.name.trim()))throw new Error("Hay productos incompletos en el archivo. No se han cambiado tus datos.")}
+      const seenIds=new Set();for(const list of [d.inventory,d.basics,d.shopping,d.pending])for(const item of list){if(item.id==null||String(item.id)==="")continue;const itemId=String(item.id);if(seenIds.has(itemId))throw new Error("El archivo contiene identificadores repetidos. No se han cambiado tus datos.");seenIds.add(itemId)}
+      return sanitizeState(d)
     }
-    if(await ask("Eliminar categoría",`¿Eliminar "${name}"?`,"Eliminar")){
-      state.categories=state.categories.filter(x=>x!==name);
-      commit();
+    function importBackupFile(file){if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const parsed=JSON.parse(String(reader.result));const imported=validateBackup(parsed);const summary=`${imported.inventory.length} productos de inventario, ${imported.basics.length} básicos, ${imported.shopping.length} en la lista y ${imported.pending.length} pendientes.`;openDialog("¿Importar este respaldo?","La importación reemplazará los datos que se guardan actualmente en este navegador.",`<p>El archivo contiene ${esc(summary)}</p><div class="warning-box" style="margin-top:12px">${icon("alert")}<span>Exporta los datos actuales si quieres conservar una copia antes de reemplazarlos.</span></div>`,`<button class="btn btn-secondary" type="button" data-action="close-dialog">Cancelar</button><button class="btn btn-primary" type="button" data-action="confirm-import">Importar y reemplazar</button>`,true);window.pendingImport=imported}catch(error){showToast(error.message||"No se pudo leer el respaldo.","error")}finally{$("#importInput").value=""}};reader.onerror=()=>showToast("No se pudo leer el archivo.","error");reader.readAsText(file)}
+    function printCurrentList(){const host=$("#printCurrent");const groups=[...new Set(state.shopping.map((x)=>x.category||"Otros"))];host.innerHTML=`<h1>Mi lista de compras</h1><div class="print-meta">Compra Sin Olvidos · ${esc(new Intl.DateTimeFormat("es",{dateStyle:"long"}).format(new Date()))} · ${state.shopping.filter((x)=>!x.checked).length} pendientes</div>${state.shopping.length?groups.map((category)=>`<div class="print-group">${esc(category)}</div>${state.shopping.filter((x)=>normalize(x.category||"Otros")===normalize(category)).map((item)=>`<div class="print-row ${item.checked?"print-complete":""}"><span class="print-box">${item.checked?"✓":""}</span><span>${esc(item.name)}</span><span>${formatQty(item.quantity)} ${esc(item.unit||"")}</span></div>`).join("")}`).join(""):`<p>Esta lista todavía no tiene productos.</p>`}`;window.print()}
+    function latin1Bytes(value){const bytes=new Uint8Array(value.length);for(let i=0;i<value.length;i++){const code=value.charCodeAt(i);if(code>255)throw new Error("El texto del PDF contiene caracteres no compatibles.");bytes[i]=code}return bytes}
+    function escapePdfText(text){return String(text).replace(/\\/g,"\\\\").replace(/\(/g,"\\(").replace(/\)/g,"\\)").replace(/\r?\n/g," ")}
+    function makeTemplatePdf(){
+      const pages=[];const ink="0.118 0.161 0.231";const secondary="0.157 0.443 0.545";const ice="0.961 0.969 0.973";const lineColor="0.863 0.898 0.914";const coral="0.851 0.416 0.314";const muted="0.322 0.404 0.478";
+      const text=(x,y,value,size=10,color=ink)=>`q ${color} rg BT /F1 ${size} Tf ${x} ${y} Td (${escapePdfText(value)}) Tj ET Q\n`;
+      const line=(x1,y1,x2,y2,color=lineColor,width=.65)=>`q ${color} RG ${width} w ${x1} ${y1} m ${x2} ${y2} l S Q\n`;
+      const rect=(x,y,w,h,color=lineColor,width=.7)=>`q ${color} RG ${width} w ${x} ${y} ${w} ${h} re S Q\n`;
+      const filled=(x,y,w,h,color=ice)=>`q ${color} rg ${x} ${y} ${w} ${h} re f Q\n`;
+      function header(title,subtitle,page){let c="";filled(0,748,612,44,ice);c+=text(42,770,"COMPRA SIN OLVIDOS",8,secondary);c+=text(42,729,title,20,ink);c+=text(42,710,subtitle,9,muted);c+=line(42,696,570,696,lineColor,.8);c+=line(42,43,570,43,lineColor,.7);c+=text(42,27,"Lo que falta, a la vista.",8,muted);c+=text(536,27,`${page} / 5`,8,coral);return c}
+      function checkboxRow(y){return rect(48,y-3,10,10,lineColor,.8)+line(68,y-5,570,y-5,lineColor,.55)}
+      function columnHeader(y,labels){let c=filled(42,y-5,528,20,ice);for(const entry of labels)c+=text(entry.x,y+1,entry.label,8,ink);return c}
+      // Hoja 1: inventario de alimentos.
+      {let c=header("Inventario de alimentos","Anota lo que tienes y el mínimo que quieres mantener.",1);c+=columnHeader(674,[{x:48,label:"PRODUCTO"},{x:300,label:"CANTIDAD"},{x:380,label:"UNIDAD"},{x:465,label:"MÍNIMO"},{x:535,label:"OK"}]);for(let i=0;i<23;i++){const y=647-i*25;c+=line(42,y-8,570,y-8,lineColor,.55);c+=rect(538,y-3,10,10,lineColor,.75)}c+=text(42,55,"Ejemplos: arroz, pasta, aceite, conservas.",8,muted);pages.push(c)}
+      // Hoja 2: inventario de productos del hogar.
+      {let c=header("Inventario del hogar","Bebidas, higiene, limpieza, lavandería, mascotas y más.",2);c+=columnHeader(674,[{x:48,label:"PRODUCTO"},{x:300,label:"CATEGORÍA"},{x:405,label:"CANTIDAD"},{x:500,label:"MÍNIMO"},{x:545,label:"OK"}]);for(let i=0;i<23;i++){const y=647-i*25;c+=line(42,y-8,570,y-8,lineColor,.55);c+=rect(548,y-3,10,10,lineColor,.75)}c+=text(42,55,"Escribe solo los productos que quieras controlar.",8,muted);pages.push(c)}
+      // Hoja 3: productos habituales.
+      {let c=header("Mis productos habituales","Guarda aquí los básicos que revisas en cada compra.",3);c+=columnHeader(674,[{x:48,label:"PRODUCTO"},{x:250,label:"CATEGORÍA"},{x:390,label:"CANTIDAD HABITUAL"},{x:535,label:"AÑADIR"}]);for(let i=0;i<23;i++){const y=647-i*25;c+=line(42,y-8,570,y-8,lineColor,.55);c+=rect(540,y-3,10,10,lineColor,.75)}c+=text(42,55,"Revisa cada básico antes de agregarlo a la lista.",8,muted);pages.push(c)}
+      // Hoja 4: lista organizada.
+      {let c=header("Lista de compras organizada","Agrupa los productos por categoría mientras recorres la tienda.",4);const groups=["Alimentos","Bebidas","Higiene y limpieza","Otros"] ;let y=674;for(const group of groups){c+=filled(42,y-5,528,18,ice);c+=text(49,y+1,group.toUpperCase(),8,ink);y-=25;for(let i=0;i<4;i++){c+=rect(49,y-3,10,10,lineColor,.75);c+=line(68,y-5,485,y-5,lineColor,.55);c+=text(500,y, i===0?"Cant.":"",7,muted);y-=24}y-=4}c+=text(42,55,"Cantidad     Unidad     Nota",8,muted);pages.push(c)}
+      // Hoja 5: lista rápida.
+      {let c=header("Lista rápida de compras","Para anotar lo que necesitas, sin separar por categorías.",5);c+=columnHeader(674,[{x:48,label:"PRODUCTO"},{x:442,label:"CANTIDAD"},{x:535,label:"OK"}]);for(let i=0;i<24;i++){const y=647-i*24;c+=rect(48,y-3,10,10,lineColor,.75);c+=line(68,y-5,418,y-5,lineColor,.55);c+=line(440,y-5,518,y-5,lineColor,.55);c+=rect(541,y-3,10,10,lineColor,.75)}c+=text(42,55,"Revisa tu lista antes de salir de la tienda.",8,muted);pages.push(c)}
+      const objects=[];objects[1]="<< /Type /Catalog /Pages 2 0 R >>";objects[2]=`<< /Type /Pages /Kids [${pages.map((_,i)=>`${4+i*2} 0 R`).join(" ")}] /Count ${pages.length} >>`;objects[3]="<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>";
+      pages.forEach((content,i)=>{const pageId=4+i*2,contentId=pageId+1;objects[pageId]=`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents ${contentId} 0 R >>`;objects[contentId]=`<< /Length ${content.length} >>\nstream\n${content}endstream`});
+      let pdf="%PDF-1.4\n%CSO\n";const offsets=[0];for(let i=1;i<objects.length;i++){offsets[i]=pdf.length;pdf+=`${i} 0 obj\n${objects[i]}\nendobj\n`}const xref=pdf.length;pdf+=`xref\n0 ${objects.length}\n0000000000 65535 f \n`;for(let i=1;i<objects.length;i++)pdf+=`${String(offsets[i]).padStart(10,"0")} 00000 n \n`;pdf+=`trailer\n<< /Size ${objects.length} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF`;return new Blob([latin1Bytes(pdf)],{type:"application/pdf"})
     }
-  }
-});
-
-$("finishPurchase").onclick=async()=>{
-  const bought=state.shopping.filter(x=>x.done);
-  const pending=state.shopping.filter(x=>!x.done);
-  if(!bought.length){notify("Marca al menos un producto como comprado.");return;}
-  const summary=`Comprados: ${bought.length}. Pendientes que se conservarán: ${pending.length}. ¿Deseas finalizar esta compra?`;
-  if(!await ask("Finalizar compra",summary,"Continuar"))return;
-  const update=await ask(
-    "Actualizar inventario",
-    "¿Quieres sumar los productos comprados a tu inventario? Los productos nuevos también se registrarán. Si eliges Cancelar, finalizarás sin modificar el inventario.",
-    "Sí, actualizar"
-  );
-  state.lastUndo={
-    inventory:structuredClone(state.inventory),
-    shopping:structuredClone(state.shopping)
-  };
-  if(update){
-    for(const x of bought){
-      const found=state.inventory.find(v=>norm(v.name)===norm(x.name));
-      if(found){
-        if(norm(found.unit)===norm(x.unit)){
-          found.qty+=x.qty;
-        }else{
-          // No mezclar cantidades con unidades distintas.
-          notify("Algunas unidades no coincidieron; revisa tu inventario.");
-        }
-      }else{
-        state.inventory.push({
-          id:uid(),name:x.name,category:x.category,qty:x.qty,
-          unit:x.unit,min:null,target:null,notes:""
-        });
+    function renameCategory(oldName,newName){const trimmed=newName.trim();if(!trimmed)return showToast("Escribe un nombre para la categoría.","error");if(normalize(oldName)==="otros")return showToast("La categoría Otros se conserva como opción general.","error");if(state.categories.some((x)=>normalize(x)===normalize(trimmed)&&normalize(x)!==normalize(oldName)))return showToast("Ya existe una categoría con ese nombre.","error");state.categories=state.categories.map((x)=>normalize(x)===normalize(oldName)?trimmed:x);if(normalize(inventoryCategory)===normalize(oldName))inventoryCategory=trimmed;for(const list of [state.inventory,state.basics,state.shopping,state.pending])for(const item of list)if(normalize(item.category)===normalize(oldName))item.category=trimmed;commit("Categoría actualizada")}
+    function deleteCategory(category){if(normalize(category)==="otros")return;const count=[...state.inventory,...state.basics,...state.shopping,...state.pending].filter((x)=>normalize(x.category)===normalize(category)).length;deleteWithConfirm("Eliminar categoría",`¿Eliminar «${category}»? ${count?`${count} productos pasarán a «Otros».`:""}`,()=>{state.categories=state.categories.filter((x)=>normalize(x)!==normalize(category));if(normalize(inventoryCategory)===normalize(category))inventoryCategory="all";for(const list of [state.inventory,state.basics,state.shopping,state.pending])for(const item of list)if(normalize(item.category)===normalize(category))item.category="Otros";commit("Categoría eliminada");openCategories()})}
+    document.addEventListener("submit",(event)=>{
+      const form=event.target;if(!(form instanceof HTMLFormElement))return;
+      if(form.id==="inventoryForm"){
+        event.preventDefault();const d=new FormData(form);const item={id:String(d.get("id")||id()),name:String(d.get("name")||"").trim(),category:String(d.get("category")||"Otros"),quantity:Math.max(0,asNumber(d.get("quantity"))),unit:String(d.get("unit")||"").trim(),minimum:d.get("minimum")===""?null:Math.max(0,asNumber(d.get("minimum"))),notes:String(d.get("notes")||"").trim()};if(!item.name)return;const duplicate=state.inventory.find((x)=>normalize(x.name)===normalize(item.name)&&x.id!==item.id);if(duplicate){showToast("Ese producto ya existe en el inventario. Edita la entrada existente.","error");return}const index=state.inventory.findIndex((x)=>x.id===item.id);if(index>=0)state.inventory[index]=item;else state.inventory.push(item);closeDialog();commit(index>=0?"Producto actualizado":"Producto añadido al inventario");return
       }
-    }
-  }
-  state.shopping=pending.map(x=>({...x,done:false}));
-  commit();
-  notify(`Compra finalizada. ${pending.length} productos pendientes conservados.`);
-};
-
-$("undoPurchase").onclick=async()=>{
-  if(!state.lastUndo)return;
-  if(!await ask("Deshacer finalización",
-    "Se restaurarán el inventario y la lista anteriores a la última finalización. Los cambios posteriores en esas secciones se perderán.",
-    "Restaurar"))return;
-  const snapshot=state.lastUndo;
-  state.inventory=snapshot.inventory;
-  state.shopping=snapshot.shopping;
-  state.lastUndo=null;
-  commit();notify("Última finalización restaurada.");
-};
-
-function downloadBlob(blob,filename){
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement("a");
-  a.href=url;a.download=filename;
-  document.body.appendChild(a);a.click();a.remove();
-  setTimeout(()=>URL.revokeObjectURL(url),3000);
-}
-$("exportData").onclick=()=>{
-  const json=JSON.stringify(state,null,2);
-  downloadBlob(new Blob([json],{type:"application/json"}),
-    `Compra-Sin-Olvidos-Respaldo-${new Date().toISOString().slice(0,10)}.json`);
-  notify("Respaldo descargado.");
-};
-$("importTrigger").onclick=()=>$("importFile").click();
-$("importFile").onchange=async e=>{
-  const file=e.target.files?.[0];
-  e.target.value="";
-  if(!file)return;
-  if(file.size>5*1024*1024){notify("El archivo supera el límite de 5 MB.");return;}
-  try{
-    const parsed=JSON.parse(await file.text());
-    if(!validateState(parsed)){notify("Respaldo incompatible o inválido.");return;}
-    const message=`El respaldo contiene ${parsed.inventory.length} productos de inventario, ${parsed.basics.length} básicos y ${parsed.shopping.length} productos en la lista. Reemplazará tus datos actuales.`;
-    if(await ask("Importar respaldo",message,"Reemplazar datos")){
-      state=parsed;commit();notify("Respaldo importado correctamente.");
-    }
-  }catch(err){notify("No se pudo leer el archivo JSON.");}
-};
-$("clearAll").onclick=async()=>{
-  if(await ask("Eliminar todos los datos",
-    "Esta acción borrará la información guardada en este navegador. Exporta un respaldo antes de continuar.",
-    "Eliminar todo")){
-    state=emptyState();commit();notify("Datos eliminados.");
-  }
-};
-
-function printShopping(){
-  const items=[...state.shopping].sort((a,b)=>
-    a.category.localeCompare(b.category,"es")||a.name.localeCompare(b.name,"es"));
-  $("printArea").innerHTML=`
-    <h1>Mi lista de compras</h1>
-    <p>Compra Sin Olvidos · Saykus Solutions</p>
-    <p>Fecha: ____________________</p>
-    <table><thead><tr><th style="width:10%">Listo</th><th>Producto</th><th>Cantidad</th><th>Categoría</th></tr></thead>
-    <tbody>${items.map(x=>`<tr>
-      <td>${x.done?"[X]":"[ ]"}</td>
-      <td>${esc(x.name)}</td>
-      <td>${esc(unitText(x.qty,x.unit))}</td>
-      <td>${esc(x.category)}</td>
-    </tr>`).join("")}</tbody></table>
-    <p class="printfoot">Lo que falta, a la vista. · Saykus Solutions</p>`;
-  window.print();
-}
-$("printCurrent").onclick=printShopping;
-$("printCurrent2").onclick=printShopping;
-
-// PDF autónomo de 5 páginas tamaño carta.
-// Generación sin librerías ni archivos externos.
-// Se usan fuentes PDF estándar y coordenadas en puntos.
-function makePdf(){
-  const W=612,H=792;
-  const objects=[];
-  const add=obj=>(objects.push(obj),objects.length);
-  const font=add("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>");
-  const bold=add("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>");
-  const pagesId=add("");
-  const pageIds=[];
-
-  // Convierte texto a caracteres compatibles con WinAnsi.
-  const safe=s=>String(s).replace(/[^\x20-\x7E\u00A0-\u00FF]/g,"-")
-    .replace(/\\/g,"\\\\").replace(/\(/g,"\\(").replace(/\)/g,"\\)");
-  const text=(x,y,size,s,isBold=false)=>
-    `BT /F${isBold?2:1} ${size} Tf 0 g 1 0 0 1 ${x} ${y} Tm (${safe(s)}) Tj ET\n`;
-  const line=(x1,y1,x2,y2)=>
-    `0.77 G 0.6 w ${x1} ${y1} m ${x2} ${y2} l S\n`;
-  const rect=(x,y,w,h)=>
-    `0.77 G 0.6 w ${x} ${y} ${w} ${h} re S\n`;
-
-  function page(title,subtitle,headers,rows=17){
-    let c="";
-    c+=text(42,746,10,"SAYKUS SOLUTIONS  /  COMPRA SIN OLVIDOS",true);
-    c+=line(42,731,570,731);
-    c+=text(42,692,22,title,true);
-    c+=text(42,671,10,subtitle);
-    c+=text(42,642,10,"Fecha: ____________________",false);
-    const top=607, bottom=75, height=(top-bottom)/(rows+1);
-    const cols=headers.length;
-    const x=[42];
-    const proportions=cols===3?[.12,.56,.32]:
-      cols===4?[.12,.43,.25,.20]:[.1,.35,.2,.2,.15];
-    let acc=42;
-    for(const p of proportions){acc+=528*p;x.push(acc);}
-    c+=rect(42,bottom,528,top-bottom);
-    for(let i=1;i<cols;i++)c+=line(x[i],bottom,x[i],top);
-    for(let r=1;r<=rows;r++)c+=line(42,top-r*height,570,top-r*height);
-    headers.forEach((h,i)=>c+=text(x[i]+5,top-height+10,9,h,true));
-    c+=text(42,44,9,"Revisa  /  Anota  /  Compra  /  Actualiza");
-    return c;
-  }
-
-  const specs=[
-    ["Inventario de alimentos","Nevera, congelador y despensa.",
-      ["Reponer","Producto","Cantidad","Ubicacion"],16],
-    ["Inventario del hogar","Limpieza, higiene, lavanderia, mascotas y otros.",
-      ["Reponer","Producto","Cantidad","Categoria"],16],
-    ["Mis productos habituales","Tus basicos para futuras compras.",
-      ["Agregar","Producto","Cantidad habitual","Categoria"],16],
-    ["Lista de compras organizada","Agrupa lo que necesitas y marca lo comprado.",
-      ["Listo","Producto","Cantidad","Categoria"],16],
-    ["Mi lista rapida","Una hoja sencilla para llevar a la tienda.",
-      ["Listo","Producto","Cantidad"],18]
-  ];
-  for(const spec of specs){
-    const stream=page(...spec);
-    const bytes=latinBytes(stream);
-    const streamId=add(`<< /Length ${bytes.length} >>\nstream\n${stream}endstream`);
-    const pageId=add(`<< /Type /Page /Parent ${pagesId} 0 R /MediaBox [0 0 ${W} ${H}] /Resources << /Font << /F1 ${font} 0 R /F2 ${bold} 0 R >> >> /Contents ${streamId} 0 R >>`);
-    pageIds.push(pageId);
-  }
-  objects[pagesId-1]=`<< /Type /Pages /Kids [${pageIds.map(i=>i+" 0 R").join(" ")}] /Count ${pageIds.length} >>`;
-  const catalog=add(`<< /Type /Catalog /Pages ${pagesId} 0 R >>`);
-
-  let parts=["%PDF-1.4\n"];
-  let offsets=[0],position=latinBytes(parts[0]).length;
-  objects.forEach((obj,i)=>{
-    offsets.push(position);
-    const part=`${i+1} 0 obj\n${obj}\nendobj\n`;
-    parts.push(part);
-    position+=latinBytes(part).length;
-  });
-  const xref=position;
-  let tail=`xref\n0 ${objects.length+1}\n0000000000 65535 f \n`;
-  for(let i=1;i<offsets.length;i++)
-    tail+=`${String(offsets[i]).padStart(10,"0")} 00000 n \n`;
-  tail+=`trailer\n<< /Size ${objects.length+1} /Root ${catalog} 0 R >>\nstartxref\n${xref}\n%%EOF`;
-  parts.push(tail);
-  const arrays=parts.map(latinBytes);
-  const all=new Uint8Array(arrays.reduce((sum,a)=>sum+a.length,0));
-  let at=0;
-  for(const a of arrays){all.set(a,at);at+=a.length;}
-  return new Blob([all],{type:"application/pdf"});
-}
-function latinBytes(s){
-  const a=new Uint8Array(s.length);
-  for(let i=0;i<s.length;i++)a[i]=s.charCodeAt(i)&255;
-  return a;
-}
-$("downloadPdf").onclick=()=>{
-  try{
-    downloadBlob(makePdf(),"Compra-Sin-Olvidos-Imprimible-Carta.pdf");
-    notify("PDF de cinco hojas descargado.");
-  }catch(e){
-    notify("No se pudo generar el PDF.");
-  }
-};
-
-// Inicio.
-load();
-render();
-</script>
+      if(form.id==="basicForm"){
+        event.preventDefault();const d=new FormData(form);const item={id:String(d.get("id")||id()),name:String(d.get("name")||"").trim(),category:String(d.get("category")||"Otros"),quantity:Math.max(.01,asNumber(d.get("quantity"),1)),unit:String(d.get("unit")||"").trim(),notes:String(d.get("notes")||"").trim()};if(!item.name)return;const duplicate=state.basics.find((x)=>normalize(x.name)===normalize(item.name)&&x.id!==item.id);if(duplicate){showToast("Ese producto ya está en tus básicos.","error");return}const index=state.basics.findIndex((x)=>x.id===item.id);if(index>=0)state.basics[index]=item;else state.basics.push(item);closeDialog();commit(index>=0?"Básico actualizado":"Producto guardado en mis básicos");return
+      }
+      if(form.id==="shoppingAddForm"){
+        event.preventDefault();const d=new FormData(form);const added=addToShopping({name:String(d.get("name")||"").trim(),category:String(d.get("category")||"Otros"),quantity:Math.max(.01,asNumber(d.get("quantity"),1)),unit:String(d.get("unit")||"").trim()});if(added){form.reset();$("#shoppingQuantity").value="1";$("#shoppingCategory").value=state.categories.includes("Alimentos")?"Alimentos":state.categories[0]||"Otros"}return
+      }
+      if(form.id==="shoppingEditForm"){
+        event.preventDefault();const d=new FormData(form);const item=state.shopping.find((x)=>x.id===String(d.get("id")));if(!item)return;const name=String(d.get("name")||"").trim();const duplicate=state.shopping.find((x)=>x.id!==item.id&&normalize(x.name)===normalize(name));if(duplicate){showToast("Ese nombre ya aparece en la lista.","error");return}item.name=name;item.category=String(d.get("category")||"Otros");item.quantity=Math.max(.01,asNumber(d.get("quantity"),1));item.unit=String(d.get("unit")||"").trim();closeDialog();commit("Artículo actualizado");return
+      }
+      if(form.id==="categoryAddForm"){
+        event.preventDefault();const name=String(new FormData(form).get("name")||"").trim();if(state.categories.some((x)=>normalize(x)===normalize(name))){showToast("Esa categoría ya existe.","error");return}state.categories.push(name);commit("Categoría añadida");openCategories();return
+      }
+      if(form.dataset.categoryForm==="rename"){
+        event.preventDefault();const d=new FormData(form);const oldName=String(d.get("old")||"");const newName=String(d.get("name")||"");renameCategory(oldName,newName);openCategories();return
+      }
+    });
+    document.addEventListener("input",(event)=>{if(event.target.id==="inventorySearch"){inventorySearch=event.target.value;withViewport(renderInventory)}});
+    document.addEventListener("change",(event)=>{
+      const t=event.target;if(t.id==="inventoryCategoryFilter"){inventoryCategory=t.value;withViewport(renderInventory)}
+      if(t.id==="restockOnly"){restockOnly=t.checked;withViewport(renderInventory)}
+      if(t.matches('[data-action="toggle-shopping"]')){const item=state.shopping.find((x)=>x.id===t.dataset.id);if(item){item.checked=t.checked;commit()}}
+      if(t.id==="importInput"){importBackupFile(t.files&&t.files[0])}
+    });
+    document.addEventListener("click",(event)=>{
+      const button=event.target.closest("[data-action]");if(button){const action=button.dataset.action;const itemId=button.dataset.id;const item=state.inventory.find((x)=>x.id===itemId);const basic=state.basics.find((x)=>x.id===itemId);const shop=state.shopping.find((x)=>x.id===itemId);const pending=state.pending.find((x)=>x.id===itemId);
+        if(action==="add-inventory")openInventoryForm();
+        else if(action==="edit-inventory"&&item)openInventoryForm(item);
+        else if(action==="delete-inventory"&&item)deleteWithConfirm("Eliminar producto",`¿Eliminar «${item.name}» del inventario?`,()=>{state.inventory=state.inventory.filter((x)=>x.id!==item.id);commit("Producto eliminado del inventario")});
+        else if(action==="manage-categories")openCategories();
+        else if(action==="clear-inventory-filters"){inventorySearch="";inventoryCategory="all";restockOnly=false;withViewport(()=>{$("#inventorySearch").value="";$("#restockOnly").checked=false;renderInventory()})}
+        else if(action==="restock-item"&&item)addToShopping({name:item.name,category:item.category,quantity:lowAmount(item),unit:item.unit,inventoryId:item.id});
+        else if(action==="add-inventory-item"&&item)addToShopping({name:item.name,category:item.category,quantity:1,unit:item.unit,inventoryId:item.id});
+        else if(action==="add-basic")openBasicForm();
+        else if(action==="edit-basic"&&basic)openBasicForm(basic);
+        else if(action==="delete-basic"&&basic)deleteWithConfirm("Eliminar básico",`¿Eliminar «${basic.name}» de tus productos habituales?`,()=>{state.basics=state.basics.filter((x)=>x.id!==basic.id);commit("Básico eliminado")});
+        else if(action==="add-basic-list"&&basic)addToShopping({name:basic.name,category:basic.category,quantity:basic.quantity,unit:basic.unit});
+        else if(action==="edit-shopping"&&shop)openShoppingEdit(shop);
+        else if(action==="delete-shopping"&&shop)deleteWithConfirm("Quitar de la lista",`¿Quitar «${shop.name}» de esta lista de compras?`,()=>{state.shopping=state.shopping.filter((x)=>x.id!==shop.id);commit("Artículo quitado de la lista")});
+        else if(action==="finish-purchase"){if(!state.shopping.length){showToast("Añade productos antes de finalizar la compra.","error")}else createPurchaseSummary()}
+        else if(action==="add-pending"&&pending)addToShopping(pending,pending.id);
+        else if(action==="delete-pending"&&pending)deleteWithConfirm("Eliminar pendiente",`¿Eliminar «${pending.name}» de los pendientes guardados?`,()=>{state.pending=state.pending.filter((x)=>x.id!==pending.id);commit("Pendiente eliminado")});
+        else if(action==="dup-add"){const target=state.shopping.find((x)=>x.id===button.dataset.existing);if(target){target.quantity=asNumber(target.quantity)+asNumber(button.dataset.amount);if(!target.unit&&button.dataset.unit)target.unit=button.dataset.unit;const pendingId=button.dataset.pending;if(pendingId)state.pending=state.pending.filter((x)=>x.id!==pendingId);closeDialog();commit("Cantidad sumada en la lista")}}
+        else if(action==="dup-keep"){const pendingId=button.dataset.pending;if(pendingId)state.pending=state.pending.filter((x)=>x.id!==pendingId);closeDialog();if(pendingId)commit("El pendiente quedó cubierto por el artículo de la lista");else showToast("Se mantuvo la cantidad existente")}
+        else if(action==="dup-cancel"||action==="close-dialog")closeDialog();
+        else if(action==="confirm-delete"){const callback=window.pendingConfirm;window.pendingConfirm=null;closeDialog();if(callback)callback()}
+        else if(action==="confirm-finish")completePurchase($("#updateStockConfirm")?.checked===true);
+        else if(action==="delete-category")deleteCategory(button.dataset.category||"");
+        else if(action==="export-data")exportData();
+        else if(action==="choose-import")$("#importInput").click();
+        else if(action==="confirm-import"){if(window.pendingImport){state=window.pendingImport;window.pendingImport=null;closeDialog();commit("Respaldo importado")}else{closeDialog();showToast("No hay un respaldo listo para importar.","error")}}
+        else if(action==="clear-data")deleteWithConfirm("Borrar todos mis datos", "Se borrarán inventario, básicos, listas y categorías guardados en este navegador. Esta acción no se puede deshacer. Exporta un respaldo si quieres conservarlos.",()=>{state=newState();inventorySearch="";inventoryCategory="all";restockOnly=false;shoppingFilter="all";localStorage.removeItem(STORAGE_KEY);commit("Se borraron los datos guardados")});
+        else if(action==="print-list")printCurrentList();
+        else if(action==="download-pdf"){try{downloadBlob(makeTemplatePdf(),"compra-sin-olvidos-plantillas.pdf");showToast("Plantillas PDF descargadas")}catch(error){showToast(error.message||"No se pudo generar el PDF.","error")}}
+      }
+      const filter=event.target.closest("[data-filter]");if(filter){shoppingFilter=filter.dataset.filter;withViewport(renderShopping)}
+    });
+    dialog.addEventListener("click",(event)=>{if(event.target===dialog)closeDialog()});
+    window.addEventListener("storage",(event)=>{if(event.key===STORAGE_KEY){state=loadState();renderAll();showToast("Los datos se actualizaron en otra pestaña")}});
+    renderAll();setNavObserver();
+  })();
+  </script>
 </body>
 </html>
